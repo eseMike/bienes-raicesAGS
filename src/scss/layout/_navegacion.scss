@@ -1,0 +1,39 @@
+.navbar {
+  background-color: $marinoDark !important;
+  .container-fluid {
+    .navbar-brand {
+      img {
+        width: 200px;
+        height: auto;
+      }
+    }
+    .navbar-collapse {
+      .navbar-nav {
+        .nav-item {
+          margin-right: 1rem;
+          .nav-link {
+            color: $softGold !important;
+            font-size: 2.2rem;
+            text-align: center;
+
+            @media (min-width: 768px) {
+              text-align: start;
+
+              // transition
+              text-decoration: none !important;
+              background-image: linear-gradient($softGold, $gold) !important;
+              background-position: 0% 100% !important;
+              background-repeat: no-repeat !important;
+              background-size: 0% 2px !important;
+              transition: background-size 0.3s !important;
+              &:hover,
+              :focus {
+                background-size: 100% 2px !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+.footer {
+  padding: $separacion / 2;
+  background-color: $marinoDark;
+  .contenedor-footer {
+    padding-top: $separacion / 2;
+    nav {
+      .link-footer {
+        color: $softGold !important;
+        font-size: 2.2rem;
+        text-align: center;
+        text-decoration: none;
+        margin-right: 1rem;
+        // transition
+        text-decoration: none !important;
+        background-image: linear-gradient($softGold, $gold) !important;
+        background-position: 0% 100% !important;
+        background-repeat: no-repeat !important;
+        background-size: 0% 2px !important;
+        transition: background-size 0.3s !important;
+        &:hover,
+        :focus {
+          background-size: 100% 2px !important;
+        }
+      }
+    }
+  }
+  .copyright {
+    text-align: center;
+    color: $softGold;
+    font-size: 1rem;
+  }
+}
