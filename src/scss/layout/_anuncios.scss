@@ -1,0 +1,55 @@
+@include tablet {
+  .contenedor-anuncios {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    margin-top: 4rem;
+  }
+}
+
+.anuncio {
+  border-radius: 38px;
+  background: #ededed;
+  box-shadow: 20px 20px 60px #c9c9c9, -20px -20px 60px #ffffff;
+  picture {
+    img {
+      border-radius: 3rem;
+    }
+  }
+  .contenido-anuncio {
+    padding: 2rem;
+  }
+  h3 {
+    margin-bottom: 0;
+    font-size: 2.7 rem !important;
+    color: $marino;
+  }
+  .precio {
+    color: $softGold;
+    font-weight: 500;
+    font-size: 2.4rem;
+  }
+}
+
+.iconos-caracteristicas {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+  li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    p {
+      margin-bottom: 0;
+      color: $softGold;
+      font-family: 2.4rem;
+      font-weight: 500;
+    }
+    svg {
+      color: $marino;
+      font-size: 3rem;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+.testimonial {
+  background-color: $marinoDark;
+  font-size: 2.4rem !important;
+  padding: 2rem;
+  color: $softGold;
+  border-radius: 25px;
+  p {
+    color: white;
+    text-align: end;
+    font-style: italic;
+  }
+}

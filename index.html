@@ -16,7 +16,7 @@
   </head>
 
   <body>
-    <header class="header">
+    <header class="header inicio">
       <div class="contenedor contenido-header">
         <!-- navbar  -->
         <nav class="navbar navbar-expand-lg bg-light">
@@ -59,15 +59,247 @@
         </nav>
         <!-- end of navbar -->
 
-        <h1>Venta de Casas y departamentos exclusivos de lujo</h1>
+        <h1>
+          Venta y renta de casas en la zona metropolitana <br />
+          de Aguascalientes.
+        </h1>
       </div>
     </header>
 
     <main class="contenedor seccion">
-      <h1>Título principal</h1>
+      <h1>¿Qué ofrecemos?</h1>
+
+      <div class="iconos-nosotros">
+        <div class="icono">
+          <i class="fa-solid fa-shield-halved"></i>
+          <h3>Seguridad</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+            Architecto, optio?
+          </p>
+        </div>
+
+        <div class="icono">
+          <i class="fa-solid fa-hand-holding-dollar"></i>
+          <h3>Precio</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+            Architecto, optio?
+          </p>
+        </div>
+
+        <div class="icono">
+          <i class="fa-solid fa-clock"></i>
+          <h3>A tiempo</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+            Architecto, optio?
+          </p>
+        </div>
+      </div>
     </main>
 
-    <footer class="footer seccion">
+    <!-- propiedades  -->
+    <section class="seccion contenedor">
+      <h2>Propiedades en venta</h2>
+      <div class="contenedor-anuncios">
+        <!-- anuncio1 -->
+        <div class="anuncio">
+          <picture>
+            <source srcset="build/img/anuncio1.webp" type="image/webp" />
+            <source srcset="build/img/anuncio1.jpg" type="image/jpg" />
+            <img loading="lazy" src="build/img/anuncio1.jpg" alt="anuncio" />
+          </picture>
+
+          <div class="contenido-anuncio">
+            <h3>Casa de lujo en el lago</h3>
+            <p>
+              Casa en el lago con excelente vista, acabados de lujo a un
+              excelente precio
+            </p>
+            <p class="precio">$3,000,000</p>
+            <ul class="iconos-caracteristicas">
+              <li>
+                <i class="fa-solid fa-toilet"></i>
+                <p>3</p>
+              </li>
+              <li>
+                <i class="fa-solid fa-car"></i>
+                <p>2</p>
+              </li>
+              <li>
+                <i class="fa-solid fa-bed"></i>
+                <p>4</p>
+              </li>
+            </ul>
+
+            <a class="boton boton-blue" href="anuncio.html">Ver propiedad</a>
+          </div>
+        </div>
+        <!-- anuncio2 -->
+        <div class="anuncio">
+          <picture>
+            <source srcset="build/img/anuncio2.webp" type="image/webp" />
+            <source srcset="build/img/anuncio2.jpg" type="image/jpg" />
+            <img loading="lazy" src="build/img/anuncio2.jpg" alt="anuncio" />
+          </picture>
+
+          <div class="contenido-anuncio">
+            <h3>Casa terminados de lujo</h3>
+            <p>
+              Casa en el lago con excelente vista, acabados de lujo a un
+              excelente precio
+            </p>
+            <p class="precio">$3,000,000</p>
+            <ul class="iconos-caracteristicas">
+              <li>
+                <i class="fa-solid fa-toilet"></i>
+                <p>3</p>
+              </li>
+              <li>
+                <i class="fa-solid fa-car"></i>
+                <p>2</p>
+              </li>
+              <li>
+                <i class="fa-solid fa-bed"></i>
+                <p>4</p>
+              </li>
+            </ul>
+
+            <a class="boton boton-blue" href="anuncio.html">Ver propiedad</a>
+          </div>
+        </div>
+        <!-- anuncio 3 -->
+        <div class="anuncio">
+          <picture>
+            <source srcset="build/img/anuncio3.webp" type="image/webp" />
+            <source srcset="build/img/anuncio3.jpg" type="image/jpg" />
+            <img loading="lazy" src="build/img/anuncio3.jpg" alt="anuncio" />
+          </picture>
+
+          <div class="contenido-anuncio">
+            <h3>Casa con alberca</h3>
+            <p>
+              Casa en el lago con excelente vista, acabados de lujo a un
+              excelente precio
+            </p>
+            <p class="precio">$3,000,000</p>
+            <ul class="iconos-caracteristicas">
+              <li>
+                <i class="fa-solid fa-toilet"></i>
+                <p>3</p>
+              </li>
+              <li>
+                <i class="fa-solid fa-car"></i>
+                <p>2</p>
+              </li>
+              <li>
+                <i class="fa-solid fa-bed"></i>
+                <p>4</p>
+              </li>
+            </ul>
+
+            <a class="boton boton-blue" href="anuncio.html">Ver propiedad</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="ver-todas">
+        <a class="btn-yellow" href="anuncios.html">Ver todas</a>
+      </div>
+    </section>
+    <!-- end of propiedades  -->
+
+    <!-- img contacto  -->
+    <section class="imagen-contacto">
+      <h2>Encuentra la casa que soñabas</h2>
+      <p>
+        Llena el formulario de contacto y un asesor se pondrá en contacto
+        contigo a la brevedad
+      </p>
+      <a class="btn-yellow" href="contacto.html">Contáctanos</a>
+    </section>
+    <!-- end of img contacto -->
+
+    <!-- testimonials  -->
+    <div class="contenedor seccion seccion-inferior">
+      <section class="blog">
+        <h3>Nuestro blog</h3>
+
+        <article class="entrada-blog">
+          <div class="imagen">
+            <picture>
+              <source srcset="build/img/blog1.webp" type="image/webp" />
+              <source srcset="build/img/blog1.jpg" type="image/jpeg" />
+              <img
+                loading="lazy"
+                src="build/img/anuncio1.jpg"
+                alt="Entrada blog"
+              />
+            </picture>
+          </div>
+
+          <div class="texto-entrada">
+            <a href="entrada.html">
+              <h4>Terraza en el techo de tu casa</h4>
+              <p>
+                escrito el: <span>01-Dic-2022</span> por:
+                <span>Kaboz Ricoy</span>
+              </p>
+              <p>
+                Consejos para construir una terraza en el techo de tu casa con
+                los mejores materiales y ahorrando dinero
+              </p>
+            </a>
+          </div>
+        </article>
+
+        <article class="entrada-blog">
+          <div class="imagen">
+            <picture>
+              <source srcset="build/img/blog2.webp" type="image/webp" />
+              <source srcset="build/img/blog2.jpg" type="image/jpeg" />
+              <img
+                loading="lazy"
+                src="build/img/anuncio2.jpg"
+                alt="Entrada blog"
+              />
+            </picture>
+          </div>
+
+          <div class="texto-entrada">
+            <a href="entrada.html">
+              <h4>Guía para la decoración de tu hogar</h4>
+              <p>
+                escrito el: <span>01-Dic-2022</span> por:
+                <span>Kaboz Ricoy</span>
+              </p>
+              <p>
+                Maximiza el espacio en tu hogar con esta guía, aprende a
+                combinar muebles y colores para darle vida a tu espacio
+              </p>
+            </a>
+          </div>
+        </article>
+      </section>
+
+      <!-- testimonials  -->
+      <section class="testimoniales">
+        <h3>Testimoniales</h3>
+        <div class="testimonial">
+          <blockquote>
+            "El personal se comportó de una excelente forma, muy buena atención
+            y la casa que me ofrecieron cumple con las espectativas"
+          </blockquote>
+
+          <p>-- Juanita Martinez</p>
+        </div>
+      </section>
+      <!-- End of testimonials  -->
+    </div>
+    <!-- end of testimonials  -->
+
+    <footer class="footer">
       <div class="contenedor contenedor-footer">
         <nav>
           <a class="link-footer" href="nosotros.html">Nosotros</a>
@@ -86,6 +318,13 @@
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- fontawesome  -->
+
+    <script
+      src="https://kit.fontawesome.com/bbd581d529.js"
       crossorigin="anonymous"
     ></script>
   </body>
