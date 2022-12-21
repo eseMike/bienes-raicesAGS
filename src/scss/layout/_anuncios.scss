@@ -11,6 +11,7 @@
   border-radius: 38px;
   background: #ededed;
   box-shadow: 20px 20px 60px #c9c9c9, -20px -20px 60px #ffffff;
+  margin-bottom: 2rem;
   picture {
     img {
       border-radius: 3rem;
@@ -24,11 +25,12 @@
     font-size: 2.7 rem !important;
     color: $marino;
   }
-  .precio {
-    color: $softGold;
-    font-weight: 500;
-    font-size: 2.4rem;
-  }
+}
+
+.precio {
+  color: $softGold;
+  font-weight: 500;
+  font-size: 2.4rem;
 }
 
 .iconos-caracteristicas {
@@ -37,6 +39,10 @@
   justify-content: space-around;
   align-items: center;
   list-style: none;
+  max-width: 40rem;
+  padding-left: 0;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
   li {
     display: flex;
     align-items: center;

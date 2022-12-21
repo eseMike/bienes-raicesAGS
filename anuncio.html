@@ -20,12 +20,13 @@
       <div class="contenedor contenido-header">
         <!-- navbar  -->
         <nav class="navbar navbar-expand-lg bg-light">
+          <span class="btnDark"> <i class="fa-solid fa-moon"></i> </span>
           <div class="container-fluid">
             <a class="navbar-brand" href="index.html">
-              <img src="build/img/logo.svg" alt="Logotipo" />
+              <img src="./src/img/logos/logoWhite.png" alt="Logotipo" />
             </a>
             <button
-              class="navbar-toggler"
+              class="navbar-toggler navbar-dark"
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#navbarText"
@@ -45,7 +46,7 @@
                   >
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="anuncios.html">Anuncios</a>
+                  <a class="nav-link" href="anuncios.html">Catálogo</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="blog.html">blog</a>
@@ -60,51 +61,59 @@
         <!-- end of navbar -->
       </div>
     </header>
+    <div class="whats-container">
+      <a
+        target="_blank"
+        class="whatsIcon"
+        href="https://api.whatsapp.com/send?phone=525578139893&text=Hola, me interesan sus servicios!"
+      >
+        <i class="fa-brands fa-square-whatsapp whats-icon"></i>
+      </a>
+      <main class="contenedor seccion">
+        <h1>Casa en venta frente al bosque</h1>
 
-    <main class="contenedor seccion">
-      <h1>Casa en venta frente al bosque</h1>
+        <picture>
+          <source srcset="build/img/destacada.webp" type="image/webp" />
+          <source srcset="build/img/destacada.jpg" type="image/jpeg" />
+          <img
+            loading="lazy"
+            src="build/img/destacada.jpg"
+            alt="Imagen propiedad"
+          />
+        </picture>
+        <div class="resumen-propiedad">
+          <p class="precio">$3,000,000</p>
+          <ul class="iconos-caracteristicas">
+            <li>
+              <i class="fa-solid fa-toilet"></i>
+              <p>3</p>
+            </li>
+            <li>
+              <i class="fa-solid fa-car"></i>
+              <p>2</p>
+            </li>
+            <li>
+              <i class="fa-solid fa-bed"></i>
+              <p>4</p>
+            </li>
+          </ul>
 
-      <picture>
-        <source srcset="build/img/destacada.webp" type="image/webp" />
-        <source srcset="build/img/destacada.jpg" type="image/jpeg" />
-        <img
-          loading="lazy"
-          src="build/img/destacada.jpg"
-          alt="Imagen propiedad"
-        />
-      </picture>
-      <div class="resumen-propiedad">
-        <p class="precio">$3,000,000</p>
-        <ul class="iconos-caracteristicas">
-          <li>
-            <i class="fa-solid fa-toilet"></i>
-            <p>3</p>
-          </li>
-          <li>
-            <i class="fa-solid fa-car"></i>
-            <p>2</p>
-          </li>
-          <li>
-            <i class="fa-solid fa-bed"></i>
-            <p>4</p>
-          </li>
-        </ul>
-
-        <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta
-          dolorem voluptatibus aliquam blanditiis earum itaque suscipit
-          molestias aspernatur omnis, fugit, reprehenderit similique alias
-          quidem? Totam maxime vero porro dolorem maiores. Omnis, ipsa? Quas qui
-          ad accusantium molestias aliquid consequatur autem saepe nesciunt
-          soluta eveniet ipsam, minima omnis rerum quod iure! Reprehenderit
-          tempore magnam repellat animi iure obcaecati eum placeat officiis?
-          Ipsam cupiditate ea at qui quaerat libero, nisi dolorem expedita ullam
-          optio cum totam explicabo doloremque eveniet maiores? Porro dolorum
-          facilis obcaecati quod fugit, distinctio nostrum dolorem totam
-          molestiae aliquid.
-        </p>
-      </div>
-    </main>
+          <p>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta
+            dolorem voluptatibus aliquam blanditiis earum itaque suscipit
+            molestias aspernatur omnis, fugit, reprehenderit similique alias
+            quidem? Totam maxime vero porro dolorem maiores. Omnis, ipsa? Quas
+            qui ad accusantium molestias aliquid consequatur autem saepe
+            nesciunt soluta eveniet ipsam, minima omnis rerum quod iure!
+            Reprehenderit tempore magnam repellat animi iure obcaecati eum
+            placeat officiis? Ipsam cupiditate ea at qui quaerat libero, nisi
+            dolorem expedita ullam optio cum totam explicabo doloremque eveniet
+            maiores? Porro dolorum facilis obcaecati quod fugit, distinctio
+            nostrum dolorem totam molestiae aliquid.
+          </p>
+        </div>
+      </main>
+    </div>
 
     <footer class="footer">
       <div class="contenedor contenedor-footer">
@@ -114,6 +123,8 @@
           <a class="link-footer" href="blog.html">Blog</a>
           <a class="link-footer" href="contacto.html">Contácto</a>
         </nav>
+
+        <img src="./src/img/logos/logo-white.svg" alt="" />
       </div>
 
       <p class="copyright">Todos los derechos reservados 2022 &copy</p>

@@ -17,7 +17,7 @@ p {
   font-size: 2rem;
 }
 .contenedor {
-  width: 95%;
+  width: 90%;
   max-width: 120rem;
   margin: 0 auto;
 }
@@ -53,4 +53,23 @@ h3 {
 }
 h4 {
   font-size: 2.6rem !important;
+}
+
+// What's icon
+.whats-container {
+  position: relative;
+  .whats-icon {
+    position: sticky;
+    top: 4rem;
+    z-index: 2000;
+    left: 0;
+    color: $softGold;
+    font-size: 2.5rem;
+    @media (min-width: 768px) {
+      top: 4rem;
+      z-index: 2000;
+      left: 8rem;
+      font-size: 4rem;
+    }
+  }
 }

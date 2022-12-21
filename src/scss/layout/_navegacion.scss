@@ -1,10 +1,14 @@
 .navbar {
   background-color: $marinoDark !important;
+  position: relative;
   .container-fluid {
     .navbar-brand {
       img {
-        width: 200px;
+        width: 100px;
         height: auto;
+        @media (min-width: 768px) {
+          width: 220px;
+        }
       }
     }
     .navbar-collapse {
@@ -35,5 +39,17 @@
         }
       }
     }
+  }
+}
+
+.btnDark {
+  font-size: 1.6rem;
+  position: absolute;
+  top: 2rem;
+  color: $softGold;
+  cursor: pointer;
+  @media (min-width: 768px) {
+    font-size: 3rem;
+    left: -4rem;
   }
 }

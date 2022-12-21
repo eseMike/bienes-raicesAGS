@@ -20,12 +20,13 @@
       <div class="contenedor contenido-header">
         <!-- navbar  -->
         <nav class="navbar navbar-expand-lg bg-light">
+          <span class="btnDark"> <i class="fa-solid fa-moon"></i> </span>
           <div class="container-fluid">
             <a class="navbar-brand" href="index.html">
-              <img src="build/img/logo.svg" alt="Logotipo" />
+              <img src="./src/img/logos/logoWhite.png" alt="Logotipo" />
             </a>
             <button
-              class="navbar-toggler"
+              class="navbar-toggler navbar-dark"
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#navbarText"
@@ -45,7 +46,7 @@
                   >
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="anuncios.html">Anuncios</a>
+                  <a class="nav-link" href="anuncios.html">Catálogo</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="blog.html">blog</a>
@@ -61,11 +62,132 @@
       </div>
     </header>
 
-    <main class="contenedor seccion">
-      <h1>Blog</h1>
-    </main>
+    <div class="whats-container">
+      <a
+        target="_blank"
+        class="whatsIcon"
+        href="https://api.whatsapp.com/send?phone=525578139893&text=Hola, me interesan sus servicios!"
+      >
+        <i class="fa-brands fa-square-whatsapp whats-icon"></i>
+      </a>
+      <main class="contenedor seccion contenido-centrado">
+        <h1>Nuestro blog</h1>
 
-    <footer class="footer seccion">
+        <article class="entrada-blog">
+          <div class="imagen">
+            <picture>
+              <source srcset="build/img/blog1.webp" type="image/webp" />
+              <source srcset="build/img/blog1.jpg" type="image/jpeg" />
+              <img
+                loading="lazy"
+                src="build/img/anuncio1.jpg"
+                alt="Entrada blog"
+              />
+            </picture>
+          </div>
+
+          <div class="texto-entrada">
+            <a href="entrada.html">
+              <h4>Terraza en el techo de tu casa</h4>
+              <p>
+                escrito el: <span>01-Dic-2022</span> por:
+                <span>Kaboz Ricoy</span>
+              </p>
+              <p>
+                Consejos para construir una terraza en el techo de tu casa con
+                los mejores materiales y ahorrando dinero
+              </p>
+            </a>
+          </div>
+        </article>
+
+        <article class="entrada-blog">
+          <div class="imagen">
+            <picture>
+              <source srcset="build/img/blog2.webp" type="image/webp" />
+              <source srcset="build/img/blog2.jpg" type="image/jpeg" />
+              <img
+                loading="lazy"
+                src="build/img/anuncio2.jpg"
+                alt="Entrada blog"
+              />
+            </picture>
+          </div>
+
+          <div class="texto-entrada">
+            <a href="entrada.html">
+              <h4>Terraza en el techo de tu casa</h4>
+              <p>
+                escrito el: <span>01-Dic-2022</span> por:
+                <span>Kaboz Ricoy</span>
+              </p>
+              <p>
+                Consejos para construir una terraza en el techo de tu casa con
+                los mejores materiales y ahorrando dinero
+              </p>
+            </a>
+          </div>
+        </article>
+
+        <article class="entrada-blog">
+          <div class="imagen">
+            <picture>
+              <source srcset="build/img/blog3.webp" type="image/webp" />
+              <source srcset="build/img/blog3.jpg" type="image/jpeg" />
+              <img
+                loading="lazy"
+                src="build/img/anuncio3.jpg"
+                alt="Entrada blog"
+              />
+            </picture>
+          </div>
+
+          <div class="texto-entrada">
+            <a href="entrada.html">
+              <h4>Terraza en el techo de tu casa</h4>
+              <p>
+                escrito el: <span>01-Dic-2022</span> por:
+                <span>Kaboz Ricoy</span>
+              </p>
+              <p>
+                Consejos para construir una terraza en el techo de tu casa con
+                los mejores materiales y ahorrando dinero
+              </p>
+            </a>
+          </div>
+        </article>
+
+        <article class="entrada-blog">
+          <div class="imagen">
+            <picture>
+              <source srcset="build/img/blog4.webp" type="image/webp" />
+              <source srcset="build/img/blog4.jpg" type="image/jpeg" />
+              <img
+                loading="lazy"
+                src="build/img/anuncio4.jpg"
+                alt="Entrada blog"
+              />
+            </picture>
+          </div>
+
+          <div class="texto-entrada">
+            <a href="entrada.html">
+              <h4>Terraza en el techo de tu casa</h4>
+              <p>
+                escrito el: <span>01-Dic-2022</span> por:
+                <span>Kaboz Ricoy</span>
+              </p>
+              <p>
+                Consejos para construir una terraza en el techo de tu casa con
+                los mejores materiales y ahorrando dinero
+              </p>
+            </a>
+          </div>
+        </article>
+      </main>
+    </div>
+
+    <footer class="footer">
       <div class="contenedor contenedor-footer">
         <nav>
           <a class="link-footer" href="nosotros.html">Nosotros</a>
@@ -73,12 +195,19 @@
           <a class="link-footer" href="blog.html">Blog</a>
           <a class="link-footer" href="contacto.html">Contácto</a>
         </nav>
+
+        <img src="./src/img/logos/logo-white.svg" alt="" />
       </div>
 
       <p class="copyright">Todos los derechos reservados 2022 &copy</p>
     </footer>
 
     <script src="build/js/bundle.js"></script>
+    <!-- fontawesome  -->
+    <script
+      src="https://kit.fontawesome.com/bbd581d529.js"
+      crossorigin="anonymous"
+    ></script>
     <!-- bootstrap  -->
     <!-- JavaScript Bundle with Popper -->
     <script

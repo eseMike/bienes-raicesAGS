@@ -1,0 +1,49 @@
+.dark-mode {
+  background-color: $marinoDark;
+
+  p {
+    color: $softGold;
+  }
+
+  a,
+  h1,
+  h2,
+  h3,
+  h4,
+  blockquote {
+    color: $gris;
+  }
+
+  .anuncio {
+    background-color: $brown;
+    box-shadow: none;
+    h3 {
+      color: white;
+    }
+    .iconos-caracteristicas {
+      li {
+        svg {
+          color: white;
+        }
+      }
+    }
+  }
+
+  //   formulario
+  .form {
+    fieldset {
+      border: 1px solid $softGold;
+    }
+    legend {
+      color: $softGold;
+    }
+    input:not([type="submit"]),
+    select,
+    textarea {
+      background-color: rgb(235, 213, 186);
+    }
+    p {
+      color: $gris;
+    }
+  }
+}
