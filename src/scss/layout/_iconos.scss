@@ -1,18 +1,21 @@
 .iconos-nosotros {
-  @include tablet {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-  }
+   margin-top: 1rem;
+   @include tablet {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 2rem;
+   }
 }
 
 .icono {
-  text-align: center;
-  svg {
-    color: $softGold;
-    height: 10rem;
-  }
-  h3 {
-    text-transform: uppercase;
-  }
+   text-align: center;
+   svg {
+      color: $softGold;
+      height: 10rem;
+   }
+   h3 {
+      text-transform: uppercase;
+   }
+   margin-bottom: 2rem;
 }
