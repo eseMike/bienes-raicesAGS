@@ -1,9 +1,9 @@
 .boton {
-  @include boton;
+   @include boton;
 }
 
 .btn-yellow {
-  @include btn-yellow;
-  margin-top: 4rem;
-  min-width: 230px;
+   @include btn-yellow;
+   margin-top: 4rem;
+   min-width: 230px;
 }
