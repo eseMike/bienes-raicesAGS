@@ -1,9 +1,13 @@
+@use "base/variables" as var;
+@use "base/mixins";
+
 .no-webp {
    .inicio {
       background-image: url(../../../build/img/header.jpg);
       max-width: 100%;
    }
 }
+
 .webp {
    .inicio {
       background-image: url(../../../build/img/header.jpg);
@@ -11,7 +15,7 @@
    }
 
    .header {
-      background-color: $marinoDark;
+      background-color: var.$marinoDark;
       // padding: 2rem 0 2rem 0;
       .navbar {
          background-color: transparent !important;
@@ -20,11 +24,11 @@
       &.inicio {
          background-position: center center;
          background-size: cover;
-         @include tablet {
+         @include mixins.tablet {
             min-height: 70rem;
          }
          .contenido-header {
-            @include tablet {
+            @include mixins.tablet {
                min-height: 70rem;
             }
          }
@@ -37,7 +41,7 @@
       justify-content: space-between;
       h1 {
          text-align: center;
-         color: $softGold;
+         color: var.$softGold;
          margin-bottom: 3rem;
          @media (min-width: 768px) {
             text-align: start;

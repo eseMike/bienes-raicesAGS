@@ -1,13 +1,15 @@
+@use "../base/mixins" as mix;
+
 .contenido-nosotros {
-  @include tablet {
-    @include grid(2, 2rem);
-  }
+   @include mix.tablet {
+      @include mix.grid(2, 2rem);
+   }
 }
 
 .texto-nosotros {
-  blockquote {
-    font-weight: 700;
-    font-size: 2.2rem !important ;
-    padding: 1rem 0 3rem 0;
-  }
+   blockquote {
+      font-weight: 700;
+      font-size: 2.2rem !important;
+      padding: 1rem 0 3rem 0;
+   }
 }

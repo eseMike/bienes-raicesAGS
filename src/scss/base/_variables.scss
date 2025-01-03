@@ -1,6 +1,10 @@
+@forward "sass:math";
+
+// Importación de fuentes (esto puede ir después de @forward si es necesario)
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap");
+
 // Fuentes
-$fuente_principal: "Montserrat", sans-serif !important;
+$fuente-principal: "Montserrat", sans-serif !important;
 
 // Tamaño de Media Queries
 $telefono: 480px;

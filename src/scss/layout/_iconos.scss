@@ -1,6 +1,9 @@
+@use "base/variables" as var;
+@use "base/mixins" as mix;
+
 .iconos-nosotros {
    margin-top: 1rem;
-   @include tablet {
+   @include mix.tablet {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
@@ -11,7 +14,7 @@
 .icono {
    text-align: center;
    svg {
-      color: $softGold;
+      color: var.$softGold;
       height: 10rem;
    }
    h3 {

@@ -1,45 +1,51 @@
+@use "base/variables" as var;
+
 .footer {
-  padding: calc($separacion / 2);
-  background-color: $marinoDark;
-  margin-top: 6rem;
-  .contenedor-footer {
-    // padding-top: calc($separacion / 2);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    nav {
-      .link-footer {
-        color: $softGold !important;
-        font-size: 1.5rem;
-        text-align: center;
-        text-decoration: none;
-        margin-right: 1rem;
-        // transition
-        text-decoration: none !important;
-        background-image: linear-gradient($softGold, $gold) !important;
-        background-position: 0% 100% !important;
-        background-repeat: no-repeat !important;
-        background-size: 0% 2px !important;
-        transition: background-size 0.3s !important;
-        &:hover,
-        :focus {
-          background-size: 100% 2px !important;
-        }
-        @media (min-width: 768px) {
-          font-size: 2.2rem;
-        }
+   padding: calc(var.$separacion / 2);
+   background-color: var.$marinoDark;
+   margin-top: 6rem;
+
+   .contenedor-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      nav {
+         .link-footer {
+            color: var.$softGold !important;
+            font-size: 1.5rem;
+            text-align: center;
+            text-decoration: none;
+            margin-right: 1rem;
+            background-image: linear-gradient(var.$softGold, var.$gold) !important;
+            background-position: 0% 100% !important;
+            background-repeat: no-repeat !important;
+            background-size: 0% 2px !important;
+            transition: background-size 0.3s !important;
+
+            &:hover,
+            :focus {
+               background-size: 100% 2px !important;
+            }
+
+            @media (min-width: 768px) {
+               font-size: 2.2rem;
+            }
+         }
       }
-    }
-    img {
-      width: 80px;
-      @media (min-width: 768px) {
-        width: 200px;
+
+      img {
+         width: 80px;
+
+         @media (min-width: 768px) {
+            width: 200px;
+         }
       }
-    }
-  }
-  .copyright {
-    text-align: center;
-    color: $softGold;
-    font-size: 1rem;
-  }
+   }
+
+   .copyright {
+      text-align: center;
+      color: var.$softGold;
+      font-size: 1rem;
+   }
 }

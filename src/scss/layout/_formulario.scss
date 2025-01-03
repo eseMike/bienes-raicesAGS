@@ -1,45 +1,47 @@
+@use "../base/variables" as vars;
+
 .form {
-  fieldset {
-    border: 1.5px solid $marino;
-    border-radius: 25px;
-    padding: 2rem;
-    margin-bottom: 3rem;
-  }
-  p {
-    font-size: 1.4rem;
-    color: $marino;
-  }
-  legend {
-    font-size: 2rem;
-    color: $marino;
-    font-weight: 400;
-  }
+   fieldset {
+      border: 1.5px solid vars.$marino;
+      border-radius: 25px;
+      padding: 2rem;
+      margin-bottom: 3rem;
+   }
+   p {
+      font-size: 1.4rem;
+      color: vars.$marino;
+   }
+   legend {
+      font-size: 2rem;
+      color: vars.$marino;
+      font-weight: 400;
+   }
 
-  label {
-    font-weight: bold;
-    text-transform: uppercase;
-    display: block;
-  }
+   label {
+      font-weight: bold;
+      text-transform: uppercase;
+      display: block;
+   }
 
-  input:not([type="submit"]),
-  textarea,
-  select {
-    padding: 1rem;
-    display: block;
-    width: 100%;
-    background-color: white;
-    border: 1px solid $softGold;
-    border-radius: 1rem;
-    margin-bottom: 2rem;
-  }
-  .forma-contacto {
-    max-width: 30rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  input[type="radio"] {
-    margin: 0;
-    width: auto;
-  }
+   input:not([type="submit"]),
+   textarea,
+   select {
+      padding: 1rem;
+      display: block;
+      width: 100%;
+      background-color: vars.$blanco;
+      border: 1px solid vars.$softGold;
+      border-radius: 1rem;
+      margin-bottom: 2rem;
+   }
+   .forma-contacto {
+      max-width: 30rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+   }
+   input[type="radio"] {
+      margin: 0;
+      width: auto;
+   }
 }

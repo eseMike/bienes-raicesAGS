@@ -1,9 +1,12 @@
+@use "base/variables" as var;
+@use "base/mixins";
+
 .boton {
-   @include boton;
+   @include mixins.boton;
 }
 
 .btn-yellow {
-   @include btn-yellow;
+   @include mixins.btn-yellow;
    margin-top: 4rem;
    min-width: 230px;
 }

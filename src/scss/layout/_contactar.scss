@@ -1,22 +1,27 @@
+@use "../base/variables" as vars;
+
 .imagen-contacto {
-  background-image: url(../../../build/img/encuentra.jpg);
-  max-width: 100%;
-  background-position: center center;
-  background-size: cover;
-  padding: 5rem 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 35rem;
-  justify-content: center;
-  background-attachment: fixed;
-  @media (min-width: 768px) {
-    height: 50rem;
-  }
-  h2 {
-    color: $softGold !important;
-  }
-  p {
-    color: white;
-  }
+   background-image: url(../../../build/img/encuentra.jpg);
+   max-width: 100%;
+   background-position: center center;
+   background-size: cover;
+   padding: 5rem 0;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   height: 35rem;
+   justify-content: center;
+   background-attachment: fixed;
+
+   @media (min-width: 768px) {
+      height: 50rem;
+   }
+
+   h2 {
+      color: vars.$softGold !important; // Se refiere a las variables usando el prefijo `vars`
+   }
+
+   p {
+      color: vars.$blanco; // Se asegura de usar la variable `$blanco` correctamente
+   }
 }

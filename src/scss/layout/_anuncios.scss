@@ -1,4 +1,7 @@
-@include tablet {
+@use "../base/mixins" as mixins;
+@use "../base/variables" as vars;
+
+@include mixins.tablet {
    .contenedor-anuncios {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -22,13 +25,13 @@
    }
    h3 {
       margin-bottom: 0;
-      font-size: 2.7 rem !important;
-      color: $marino;
+      font-size: 2.7rem !important;
+      color: vars.$marino; // Referencia explícita de la variable
    }
 }
 
 .precio {
-   color: $softGold;
+   color: vars.$softGold; // Referencia explícita de la variable
    font-weight: 500;
    font-size: 2.4rem;
 }
@@ -49,12 +52,12 @@
       gap: 1rem;
       p {
          margin-bottom: 0;
-         color: $softGold;
+         color: vars.$softGold; // Referencia explícita de la variable
          font-family: 2.4rem;
          font-weight: 500;
       }
       svg {
-         color: $marino;
+         color: vars.$marino; // Referencia explícita de la variable
          font-size: 3rem;
       }
    }

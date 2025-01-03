@@ -1,70 +1,75 @@
+@use "base/variables" as var;
+
 /** Media Queries **/
 @mixin telefono {
-  @media (min-width: #{$telefono}) {
-    @content;
-  }
+   @media (min-width: #{var.$telefono}) {
+      @content;
+   }
 }
 
 @mixin tablet {
-  @media (min-width: #{$tablet}) {
-    @content;
-  }
+   @media (min-width: #{var.$tablet}) {
+      @content;
+   }
 }
 
 @mixin desktop {
-  @media (min-width: #{$desktop}) {
-    @content;
-  }
+   @media (min-width: #{var.$desktop}) {
+      @content;
+   }
 }
+
 @mixin grid($columnas, $espaciado) {
-  display: grid;
-  gap: $espaciado;
-  grid-template-columns: repeat($columnas, 1fr);
+   display: grid;
+   gap: $espaciado;
+   grid-template-columns: repeat($columnas, 1fr);
 }
 
 @mixin boton() {
-  background-color: transparent;
-  border: 2px solid $marino;
-  color: $marino;
-  font-weight: bold;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  transition: all ease 0.2s;
-  border-radius: 10px;
-  max-width: 200px;
-  height: 30px;
-  margin: 0 auto;
-  cursor: pointer;
-  &:hover {
-    background-color: $marino;
-    color: white;
-    border: 1px solid transparent;
-    cursor: pointer;
-  }
+   background-color: transparent;
+   border: 2px solid var.$marino; /* Aquí se usa el prefijo */
+   color: var.$marino; /* Aquí se usa el prefijo */
+   font-weight: bold;
+   text-decoration: none;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+   transition: all ease 0.2s;
+   border-radius: 10px;
+   max-width: 200px;
+   height: 30px;
+   margin: 0 auto;
+   cursor: pointer;
+
+   &:hover {
+      background-color: var.$marino;
+      color: white;
+      border: 1px solid transparent;
+      cursor: pointer;
+   }
 }
 
 @mixin btn-yellow {
-  background-color: $softGold;
-  border: 2px solid transparent;
-  color: $marino;
-  font-weight: bold;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  transition: all ease 0.2s;
-  border-radius: 10px;
-  max-width: 200px;
-  height: 30px;
-  margin: 0 auto;
-  cursor: pointer;
-  &:hover {
-    background-color: $marino;
-    color: $softGold;
-    border: 1px solid transparent;
-  }
+   background-color: var.$softGold;
+   border: 2px solid transparent;
+   color: var.$marino;
+   font-weight: bold;
+   text-decoration: none;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+   transition: all ease 0.2s;
+   border-radius: 10px;
+   max-width: 200px;
+   height: 30px;
+   margin: 0 auto;
+   cursor: pointer;
+
+   &:hover {
+      background-color: var.$marino;
+      color: var.$softGold;
+      border: 1px solid transparent;
+   }
 }

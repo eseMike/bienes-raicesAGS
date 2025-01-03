@@ -1,3 +1,5 @@
+@use "base/variables" as var;
+
 html {
    font-size: 62.5%;
    box-sizing: border-box;
@@ -8,12 +10,12 @@ html {
    box-sizing: inherit;
 }
 body {
-   font-family: $fuente_principal;
+   font-family: var.$fuente_principal;
    font-size: 1.6rem !important;
    line-height: 1.8;
 }
 p {
-   color: $negro;
+   color: var.$negro;
    font-size: 2rem;
 }
 .contenedor {
@@ -35,11 +37,10 @@ picture {
 h1,
 h2,
 h3 {
-   font-family: $fuente_principal;
-   //   margin: calc($separacion / 2) 0;
+   font-family: var.$fuente_principal;
    font-weight: 300;
    text-align: center;
-   color: $marino;
+   color: var.$marino;
 }
 
 h1 {
@@ -63,7 +64,7 @@ h4 {
       top: 4rem;
       z-index: 2000;
       left: 0;
-      color: $softGold;
+      color: var.$softGold;
       font-size: 2.5rem;
       @media (min-width: 768px) {
          top: 4rem;

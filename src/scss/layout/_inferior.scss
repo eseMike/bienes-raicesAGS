@@ -1,50 +1,58 @@
-@include tablet {
-  .seccion-inferior {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    .blog {
-      h3 {
-        margin: 2rem 0;
+@use "../base/mixins" as mix;
+@use "../base/variables" as vars;
+
+@include mix.tablet {
+   .seccion-inferior {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+
+      .blog {
+         h3 {
+            margin: 2rem 0;
+         }
       }
-    }
-  }
+   }
 }
 
 .entrada-blog {
-  margin-bottom: 2rem;
-  @include tablet {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    column-gap: 2rem;
-  }
-  &:last-of-type {
-    margin-bottom: 0;
-  }
+   margin-bottom: 2rem;
+
+   @include mix.tablet {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      column-gap: 2rem;
+   }
+
+   &:last-of-type {
+      margin-bottom: 0;
+   }
 }
 
 .informacion-meta {
-  span {
-    color: $softGold;
-  }
+   span {
+      color: vars.$softGold;
+   }
 }
 
 .texto-entrada {
-  a {
-    color: black;
-    &:hover {
-      color: black;
-    }
-  }
-  h4 {
-    font-weight: 700;
-    margin-top: 1rem;
-    &::after {
-      content: "";
-      display: block;
-      width: 20rem;
-      height: 0.5rem;
-      background-color: $softGold;
+   a {
+      color: vars.$negro;
+      &:hover {
+         color: vars.$negro;
+      }
+   }
+
+   h4 {
+      font-weight: 700;
       margin-top: 1rem;
-    }
-  }
+
+      &::after {
+         content: "";
+         display: block;
+         width: 20rem;
+         height: 0.5rem;
+         background-color: vars.$softGold;
+         margin-top: 1rem;
+      }
+   }
 }

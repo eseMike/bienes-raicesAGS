@@ -1,49 +1,51 @@
+@use "base/variables" as var;
+
 .dark-mode {
-  background-color: $marinoDark;
+   background-color: var.$marinoDark;
 
-  p {
-    color: $softGold;
-  }
+   p {
+      color: var.$softGold;
+   }
 
-  a,
-  h1,
-  h2,
-  h3,
-  h4,
-  blockquote {
-    color: $gris;
-  }
+   a,
+   h1,
+   h2,
+   h3,
+   h4,
+   blockquote {
+      color: var.$gris;
+   }
 
-  .anuncio {
-    background-color: $brown;
-    box-shadow: none;
-    h3 {
-      color: white;
-    }
-    .iconos-caracteristicas {
-      li {
-        svg {
-          color: white;
-        }
+   .anuncio {
+      background-color: var.$brown;
+      box-shadow: none;
+      h3 {
+         color: var.$blanco;
       }
-    }
-  }
+      .iconos-caracteristicas {
+         li {
+            svg {
+               color: var.$blanco;
+            }
+         }
+      }
+   }
 
-  //   formulario
-  .form {
-    fieldset {
-      border: 1px solid $softGold;
-    }
-    legend {
-      color: $softGold;
-    }
-    input:not([type="submit"]),
-    select,
-    textarea {
-      background-color: rgb(235, 213, 186);
-    }
-    p {
-      color: $gris;
-    }
-  }
+   //   formulario
+   .form {
+      fieldset {
+         border: 1px solid var.$softGold;
+      }
+      legend {
+         color: var.$softGold;
+      }
+      input:not([type="submit"]),
+      select,
+      textarea {
+         background-color: rgb(235, 213, 186);
+      }
+      p {
+         color: var.$gris;
+      }
+   }
 }

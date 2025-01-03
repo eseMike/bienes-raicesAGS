@@ -1,55 +1,63 @@
+@use "base/variables" as var;
+
 .navbar {
-  background-color: $marinoDark !important;
-  position: relative;
-  .container-fluid {
-    .navbar-brand {
-      img {
-        width: 100px;
-        height: auto;
-        @media (min-width: 768px) {
-          width: 220px;
-        }
-      }
-    }
-    .navbar-collapse {
-      .navbar-nav {
-        .nav-item {
-          margin-right: 1rem;
-          .nav-link {
-            color: $softGold !important;
-            font-size: 2.2rem;
-            text-align: center;
+   background-color: var.$marinoDark !important;
+   position: relative;
 
+   .container-fluid {
+      .navbar-brand {
+         img {
+            width: 100px;
+            height: auto;
             @media (min-width: 768px) {
-              text-align: start;
-
-              // transition
-              text-decoration: none !important;
-              background-image: linear-gradient($softGold, $gold) !important;
-              background-position: 0% 100% !important;
-              background-repeat: no-repeat !important;
-              background-size: 0% 2px !important;
-              transition: background-size 0.3s !important;
-              &:hover,
-              :focus {
-                background-size: 100% 2px !important;
-              }
+               width: 220px;
             }
-          }
-        }
+         }
       }
-    }
-  }
+      .navbar-collapse {
+         .navbar-nav {
+            .nav-item {
+               margin-right: 1rem;
+               .nav-link {
+                  color: var.$softGold !important;
+                  font-size: 2.2rem;
+                  text-align: center;
+
+                  @media (min-width: 768px) {
+                     text-align: start;
+
+                     // transition
+                     text-decoration: none !important;
+                     background-image: linear-gradient(
+                        var.$softGold,
+                        var.$gold
+                     ) !important;
+                     background-position: 0% 100% !important;
+                     background-repeat: no-repeat !important;
+                     background-size: 0% 2px !important;
+                     transition: background-size 0.3s !important;
+
+                     &:hover,
+                     :focus {
+                        background-size: 100% 2px !important;
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
 }
 
 .btnDark {
-  font-size: 1.6rem;
-  position: absolute;
-  top: 2rem;
-  color: $softGold;
-  cursor: pointer;
-  @media (min-width: 768px) {
-    font-size: 3rem;
-    left: -4rem;
-  }
+   font-size: 1.6rem;
+   position: absolute;
+   top: 2rem;
+   color: var.$softGold;
+   cursor: pointer;
+
+   @media (min-width: 768px) {
+      font-size: 3rem;
+      left: -4rem;
+   }
 }

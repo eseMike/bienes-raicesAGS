@@ -1,22 +1,19 @@
-const {src, dest, watch, parallel, series} = require("gulp");
+import {src, dest, watch, parallel} from "gulp";
+import gulpSass from "gulp-sass";
+import sass from "sass";
+import cssnano from "cssnano";
+import postcss from "gulp-postcss";
+import autoprefixer from "autoprefixer";
+import sourcemaps from "gulp-sourcemaps";
+import concat from "gulp-concat";
+import terser from "gulp-terser";
+import webp from "gulp-webp";
+import avif from "gulp-avif";
+import cache from "gulp-cache";
+import svgmin from "gulp-svgmin";
+import imagemin from "gulp-imagemin";
 
-//css
-const sass = require("gulp-sass")(require("sass"));
-const cssnano = require("cssnano");
-const postcss = require("gulp-postcss");
-//js
-const autoPrefixer = require("autoprefixer");
-const sourcemaps = require("gulp-sourcemaps");
-const concat = require("gulp-concat");
-const terser = require("gulp-terser-js");
-//img
-const webp = require("gulp-webp");
-const imagemin = require("gulp-imagemin");
-const cache = require("gulp-cache");
-const avif = require("gulp-avif");
-//svg
-const svg = require("gulp-svgmin");
-
+// Rutas del proyecto
 const path = {
    scss: "src/scss/**/*.scss",
    css: "build/css/app.css",
@@ -26,24 +23,7 @@ const path = {
    svg: "src/img/**/*.svg",
 };
 
-function compileSass() {
-   return src(path.scss)
-      .pipe(sourcemaps.init())
-      .pipe(sass().on("error", sass.logError))
-      .pipe(postcss([autoPrefixer(), cssnano()]))
-      .pipe(sourcemaps.write("."))
-      .pipe(dest("build/css"));
-}
-
-function compileJS() {
-   return src(path.js)
-      .pipe(sourcemaps.init())
-      .pipe(concat("bundle.js"))
-      .pipe(terser())
-      .pipe(sourcemaps.write("."))
-      .pipe(dest("build/js"));
-}
-
+// Función para optimizar imágenes
 function imageMin() {
    const settings = {
       optimizationLevel: 3,
@@ -54,6 +34,27 @@ function imageMin() {
       .pipe(dest("build/img"));
 }
 
+// Función para compilar SASS a CSS
+function compileSass() {
+   return src(path.scss)
+      .pipe(sourcemaps.init())
+      .pipe(gulpSass(sass)()) // Llamar correctamente a gulpSass
+      .pipe(postcss([autoprefixer(), cssnano()]))
+      .pipe(sourcemaps.write("."))
+      .pipe(dest("build/css"));
+}
+
+// Función para compilar y minificar JavaScript
+function compileJS() {
+   return src(path.js)
+      .pipe(sourcemaps.init())
+      .pipe(concat("bundle.js"))
+      .pipe(terser())
+      .pipe(sourcemaps.write("."))
+      .pipe(dest("build/js"));
+}
+
+// Función para convertir imágenes a formato WebP
 function imgWebp() {
    const settings = {
       quality: 50,
@@ -62,25 +63,35 @@ function imgWebp() {
    return src(path.img).pipe(webp(settings)).pipe(dest("build/img"));
 }
 
+// Función para convertir imágenes a formato AVIF
 function imgAvif() {
    const settings = {
       quality: 50,
    };
 
-   return src(path.img).pipe(avif(settings)).pipe(dest("build/img"));
+   return src(path.img)
+      .pipe(
+         avif(settings).on("error", (err) => {
+            console.error("Error procesando imágenes AVIF:", err.message);
+         })
+      )
+      .pipe(dest("build/img"));
 }
 
+// Función para optimizar imágenes SVG
 function imgSvg() {
-   return src(path.svg).pipe(svg()).pipe(dest("build/img"));
+   return src(path.svg).pipe(svgmin()).pipe(dest("build/img"));
 }
 
+// Función para observar cambios en los archivos
 function autoCompile() {
    watch(path.scss, compileSass);
    watch(path.js, compileJS);
    watch(path.img, parallel(imgAvif, imgWebp, imageMin));
 }
 
-exports.default = parallel(
+// Exportar tareas
+export default parallel(
    compileSass,
    compileJS,
    autoCompile,
