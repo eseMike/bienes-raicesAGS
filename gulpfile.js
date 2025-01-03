@@ -95,7 +95,7 @@ export default parallel(
    compileSass,
    compileJS,
    autoCompile,
-   imgAvif,
+   // imgAvif,
    imageMin,
    imgWebp,
    imgSvg
