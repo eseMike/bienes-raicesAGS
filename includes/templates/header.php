@@ -15,13 +15,13 @@
    </head>
 
    <body>
-      <header class="header">
+      <header class="header <?php echo $inicio ? 'inicio': ''; ?> ">
          <div class="contenedor contenido-header">
             <!-- navbar  -->
             <nav class="navbar navbar-expand-lg bg-light">
                <span class="btnDark"> <i class="fa-solid fa-moon"></i> </span>
                <div class="container-fluid">
-                  <a class="navbar-brand" href="index.html">
+                  <a class="navbar-brand" href="index.php">
                      <img src="./src/img/logos/logoWhite.png" alt="Logotipo" />
                   </a>
                   <button
@@ -39,18 +39,18 @@
                      <span class="navbar-text me-auto mb-2 mb-lg-0"> </span>
                      <ul class="navbar-nav">
                         <li class="nav-item">
-                           <a class="nav-link" aria-current="page" href="nosotros.html"
+                           <a class="nav-link" aria-current="page" href="nosotros.php"
                               >Nosotros</a
                            >
                         </li>
                         <li class="nav-item">
-                           <a class="nav-link" href="anuncios.html">Catálogo</a>
+                           <a class="nav-link" href="anuncios.php">Catálogo</a>
                         </li>
                         <li class="nav-item">
-                           <a class="nav-link" href="blog.html">blog</a>
+                           <a class="nav-link" href="blog.php">Blog</a>
                         </li>
                         <li class="nav-item">
-                           <a class="nav-link" href="contacto.html">Contácto</a>
+                           <a class="nav-link" href="contacto.php">Contácto</a>
                         </li>
                      </ul>
                   </div>
@@ -59,32 +59,3 @@
             <!-- end of navbar -->
          </div>
       </header>
-
-      <main class="contenedor seccion">
-         <h1>Título principal</h1>
-      </main>
-
-      <footer class="footer seccion">
-         <div class="contenedor contenedor-footer">
-            <nav>
-               <a class="link-footer" href="nosotros.html">Nosotros</a>
-               <a class="link-footer" href="anuncios.html">Anuncios</a>
-               <a class="link-footer" href="blog.html">Blog</a>
-               <a class="link-footer" href="contacto.html">Contácto</a>
-            </nav>
-
-            <img src="./src/img/logos/logo-white.svg" alt="" />
-         </div>
-
-         <p class="copyright">Todos los derechos reservados 2024 &copy</p>
-      </footer>
-
-      <script src="build/js/bundle.js"></script>
-      <!-- bootstrap  -->
-      <!-- JavaScript Bundle with Popper -->
-      <script
-         src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-         crossorigin="anonymous"></script>
-   </body>
-</html>

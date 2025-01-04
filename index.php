@@ -1,75 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-   <head>
-      <meta charset="UTF-8" />
-      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link rel="stylesheet" href="build/css/app.css" />
+<?php  
+      require 'includes/funciones.php';
+      incluirTemplate('header',  $inicio = true);
+?>
 
-      <!-- bootstrap  -->
-      <link
-         href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-         rel="stylesheet"
-         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-         crossorigin="anonymous" />
-      <!-- AOS library  -->
-      <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-      <title>Bienes y Raíces Aguascalientes</title>
-   </head>
-
-   <body>
-      <header class="header inicio">
-         <div class="contenedor contenido-header">
-            <!-- navbar  -->
-            <nav class="navbar navbar-expand-lg bg-light">
-               <span class="btnDark"> <i class="fa-solid fa-moon"></i> </span>
-               <div class="container-fluid">
-                  <a class="navbar-brand" href="index.html">
-                     <img
-                        src="./src/img/logos/logoWhite.png"
-                        alt="Logotipo de Bienes y Raíces" />
-                  </a>
-                  <button
-                     class="navbar-toggler navbar-dark"
-                     type="button"
-                     data-bs-toggle="collapse"
-                     data-bs-target="#navbarText"
-                     aria-controls="navbarText"
-                     aria-expanded="false"
-                     aria-label="Toggle navigation">
-                     <span class="navbar-toggler-icon"></span>
-                  </button>
-
-                  <div class="collapse navbar-collapse" id="navbarText">
-                     <span class="navbar-text me-auto mb-2 mb-lg-0"> </span>
-                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                           <a class="nav-link" aria-current="page" href="nosotros.html"
-                              >Nosotros</a
-                           >
-                        </li>
-                        <li class="nav-item">
-                           <a class="nav-link" href="anuncios.html">Catálogo</a>
-                        </li>
-                        <li class="nav-item">
-                           <a class="nav-link" href="blog.html">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                           <a class="nav-link" href="contacto.html">Contácto</a>
-                        </li>
-                     </ul>
-                  </div>
-               </div>
-            </nav>
-
-            <!-- end of navbar -->
-
-            <h1>
-               Venta y renta de casas en la zona metropolitana <br />
-               de Aguascalientes.
-            </h1>
-         </div>
-      </header>
       <div class="whats-container">
          <a
             target="_blank"
@@ -145,7 +78,7 @@
                         </li>
                      </ul>
 
-                     <a class="boton boton-blue" href="anuncio.html">Ver propiedad</a>
+                     <a class="boton boton-blue" href="anuncio.php">Ver propiedad</a>
                   </div>
                </div>
                <!-- anuncio2 -->
@@ -178,7 +111,7 @@
                         </li>
                      </ul>
 
-                     <a class="boton boton-blue" href="anuncio.html">Ver propiedad</a>
+                     <a class="boton boton-blue" href="anuncio.php">Ver propiedad</a>
                   </div>
                </div>
                <!-- anuncio 3 -->
@@ -211,13 +144,13 @@
                         </li>
                      </ul>
 
-                     <a class="boton boton-blue" href="anuncio.html">Ver propiedad</a>
+                     <a class="boton boton-blue" href="anuncio.php">Ver propiedad</a>
                   </div>
                </div>
             </div>
 
             <div class="ver-todas">
-               <a class="btn-yellow" href="anuncios.html">Ver todas</a>
+               <a class="btn-yellow" href="anuncios.php">Ver todas</a>
             </div>
          </section>
          <!-- end of propiedades  -->
@@ -229,7 +162,7 @@
                Llena el formulario de contacto y un asesor se pondrá en contacto contigo a
                la brevedad
             </p>
-            <a class="btn-yellow" href="contacto.html">Contáctanos</a>
+            <a class="btn-yellow" href="contacto.php">Contáctanos</a>
          </section>
          <!-- end of img contacto -->
 
@@ -251,7 +184,7 @@
                   </div>
 
                   <div class="texto-entrada">
-                     <a href="entrada.html">
+                     <a href="entrada.php">
                         <h4>Terraza en el techo de tu casa</h4>
                         <p class="informacion-meta">
                            escrito el: <span>01-Dic-2024</span> por:
@@ -278,7 +211,7 @@
                   </div>
 
                   <div class="texto-entrada">
-                     <a href="entrada.html">
+                     <a href="entrada.php">
                         <h4>Guía para la decoración de tu hogar</h4>
                         <p class="informacion-meta">
                            escrito el: <span>01-Dic-2024</span> por:
@@ -309,39 +242,7 @@
          </div>
          <!-- end of testimonials  -->
       </div>
-      <footer class="footer">
-         <div class="contenedor contenedor-footer">
-            <nav>
-               <a class="link-footer" href="nosotros.html">Nosotros</a>
-               <a class="link-footer" href="anuncios.html">Catálogo</a>
-               <a class="link-footer" href="blog.html">Blog</a>
-               <a class="link-footer" href="contacto.html">Contácto</a>
-            </nav>
-
-            <img src="./src/img/logos/logo-white.svg" alt="" />
-         </div>
-
-         <p class="copyright">Todos los derechos reservados 2024 &copy</p>
-      </footer>
-
-      <script src="build/js/bundle.js"></script>
-      <!-- fontawesome  -->
-      <script
-         src="https://kit.fontawesome.com/bbd581d529.js"
-         crossorigin="anonymous"></script>
-
-      <!-- AOS -->
-      <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
-      <script>
-         AOS.init();
-      </script>
-
-      <!-- bootstrap  -->
-      <!-- JavaScript Bundle with Popper -->
-      <script
-         src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-         crossorigin="anonymous"></script>
-   </body>
-</html>
+     
+<?php  
+      include 'includes/templates/footer.php'; 
+?>
