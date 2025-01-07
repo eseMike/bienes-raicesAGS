@@ -7,7 +7,10 @@
                <a class="link-footer" href="contacto.php">Contácto</a>
             </nav>
 
-            <img src="./src/img/logos/logo-white.svg" alt="" />
+            <img src="/src/img/logos/logoWhite.png" alt="Logotipo" />
+
+
+
          </div>
 
          

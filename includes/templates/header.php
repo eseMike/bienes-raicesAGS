@@ -4,13 +4,15 @@
       <meta charset="UTF-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link rel="stylesheet" href="build/css/app.css" />
+      <!-- <link rel="stylesheet" href="/build/css/app.css" /> -->
+
       <!-- bootstrap  -->
       <link
          href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
          rel="stylesheet"
          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
          crossorigin="anonymous" />
+       <link rel="stylesheet" href="<?php echo RUTA_URL; ?>build/css/app.css">
       <title>Bienes y Raíces</title>
    </head>
 
@@ -22,7 +24,7 @@
                <span class="btnDark"> <i class="fa-solid fa-moon"></i> </span>
                <div class="container-fluid">
                   <a class="navbar-brand" href="index.php">
-                     <img src="./src/img/logos/logoWhite.png" alt="Logotipo" />
+                     <img src="/src/img/logos/logoWhite.png" alt="Logotipo" />
                   </a>
                   <button
                      class="navbar-toggler navbar-dark"
@@ -58,4 +60,13 @@
             </nav>
             <!-- end of navbar -->
          </div>
-      </header>
+</header>
+
+      <!-- Incluye el CSS de AOS en el <head> -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+
+<!-- Incluye el JS de AOS antes del cierre del <body> -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>

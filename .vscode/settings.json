@@ -19,5 +19,9 @@
       "titleBar.inactiveForeground": "#15202b99"
    },
    "peacock.color": "#b7810b",
-   "liveServer.settings.port": 5501
+   "liveServer.settings.port": 5501,
+   "[php]": {
+      "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+   },
+   "editor.formatOnSave": true
 }

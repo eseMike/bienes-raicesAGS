@@ -1,5 +1,5 @@
 @use "base/normalize";
-@use "base/variables" as *;
+@use "./base/variables" as *;
 @use "base/mixins" as mix;
 @use "base/globales";
 @use "base/utilidades";
@@ -19,3 +19,12 @@
 
 // Internas
 @use "internas/nosotros";
+@use "internas/admin";
+
+.header {
+   background-color: #04293a !important;
+}
+
+.bg-light {
+   background-color: none !important;
+}

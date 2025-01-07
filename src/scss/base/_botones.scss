@@ -1,12 +1,20 @@
 @use "base/variables" as var;
-@use "base/mixins";
+@use "base/mixins" as mix;
 
 .boton {
-   @include mixins.boton;
+   @include mix.boton();
 }
 
 .btn-yellow {
-   @include mixins.btn-yellow;
+   @include mix.btn-yellow;
    margin-top: 4rem;
    min-width: 230px;
+}
+
+.boton-rojo-block {
+   @include mix.boton(var.$rojo, block);
+}
+
+.boton-verde-block {
+   @include mix.boton(var.$softGold, block);
 }

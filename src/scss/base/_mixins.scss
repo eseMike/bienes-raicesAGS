@@ -25,13 +25,13 @@
    grid-template-columns: repeat($columnas, 1fr);
 }
 
-@mixin boton() {
+@mixin boton($color: var.$marino, $display: block) {
    background-color: transparent;
-   border: 2px solid var.$marino; /* Aquí se usa el prefijo */
-   color: var.$marino; /* Aquí se usa el prefijo */
+   border: 2px solid $color;
+   color: $color;
    font-weight: bold;
    text-decoration: none;
-   display: flex;
+   display: $display;
    align-items: center;
    justify-content: center;
    text-align: center;
@@ -43,7 +43,7 @@
    cursor: pointer;
 
    &:hover {
-      background-color: var.$marino;
+      background-color: $color;
       color: white;
       border: 1px solid transparent;
       cursor: pointer;
