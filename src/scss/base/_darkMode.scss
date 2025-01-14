@@ -31,6 +31,16 @@
       }
    }
 
+   .resumen-propiedad {
+      .iconos-caracteristicas {
+         li {
+            svg {
+               color: var.$blanco;
+            }
+         }
+      }
+   }
+
    //   formulario
    .form {
       fieldset {
@@ -47,6 +57,9 @@
       p {
          color: var.$gris;
       }
+      label {
+         color: var.$softGold;
+      }
    }
 
    table {
@@ -54,6 +67,12 @@
          td {
             color: white;
          }
+      }
+   }
+   .boton {
+      color: white;
+      &:hover {
+         background-color: var.$softGold;
       }
    }
 }
