@@ -1,8 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
+   console.log("DOMContentLoaded ejecutado");
    darkMode();
 });
 
 function darkMode() {
+   console.log("darkMode ejecutado");
    const preferDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
 
    if (preferDarkMode.matches) {
@@ -20,15 +22,17 @@ function darkMode() {
    });
 
    const btnDarkMode = document.querySelector(".btnDark");
-   btnDarkMode.addEventListener("click", function () {
-      document.body.classList.toggle("dark-mode");
+   if (btnDarkMode) {
+      btnDarkMode.addEventListener("click", function () {
+         document.body.classList.toggle("dark-mode");
 
-      if (document.body.classList.contains("dark-mode")) {
-         localStorage.setItem("modo-oscuro", "true");
-      } else {
-         localStorage.setItem("modo-oscuro", "false");
-      }
-   });
+         if (document.body.classList.contains("dark-mode")) {
+            localStorage.setItem("modo-oscuro", "true");
+         } else {
+            localStorage.setItem("modo-oscuro", "false");
+         }
+      });
+   }
 
    if (localStorage.getItem("modo-oscuro") === "true") {
       document.body.classList.add("dark-mode");
@@ -37,10 +41,6 @@ function darkMode() {
    }
 }
 
-document.querySelector(".bg-light").classList.remove("bg-light");
-
-const btnDarkMode = document.querySelector(".btnDark");
-
 // Validar el campo de descripción en tiempo real
 const descripcion = document.getElementById("descripcion");
 const mensaje = document.getElementById("mensaje-descripcion");
@@ -48,6 +48,7 @@ const contador = document.getElementById("contador-caracteres");
 let haEscrito = false;
 
 if (descripcion) {
+   console.log("Campo descripción detectado");
    descripcion.addEventListener("input", () => {
       const caracteresRestantes = 50 - descripcion.value.length;
       contador.textContent = caracteresRestantes > 0 ? caracteresRestantes : 0;
@@ -64,13 +65,22 @@ if (descripcion) {
    });
 }
 
-// Deja el campo de precio sin formato
+// Validación básica del campo de precio (solo permite números)
 const precioInput = document.getElementById("precio");
 if (precioInput) {
+   console.log("Campo precio detectado");
+
+   // Prevenir caracteres no válidos
    precioInput.addEventListener("keypress", (event) => {
-      // Permitir solo números
       if (!/[0-9]/.test(event.key)) {
          event.preventDefault();
       }
    });
 }
+
+// Asegúrate de que ningún preventDefault() detenga la acción
+document.querySelectorAll("a").forEach((link) => {
+   link.addEventListener("click", (event) => {
+      console.log("Redirigiendo a:", event.target.href);
+   });
+});

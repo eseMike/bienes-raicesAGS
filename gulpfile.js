@@ -7,13 +7,15 @@ import autoprefixer from "autoprefixer";
 import sourcemaps from "gulp-sourcemaps";
 import concat from "gulp-concat";
 import terser from "gulp-terser";
-import webp from "gulp-webp";
 import avif from "gulp-avif";
 import cache from "gulp-cache";
 import svgmin from "gulp-svgmin";
 import imagemin from "gulp-imagemin";
+import imageminWebp from "imagemin-webp";
 import {deleteAsync} from "del";
 import imageminMozjpeg from "imagemin-mozjpeg";
+import imageminOptipng from "imagemin-optipng";
+import webp from "gulp-webp";
 
 const {src, dest, watch, parallel, series} = gulp;
 
@@ -48,20 +50,13 @@ function compileJS() {
 }
 
 // Función para optimizar imágenes en formato JPEG/PNG
-// Importa imagemin-mozjpeg
-
-// Función para optimizar imágenes en formato JPEG/PNG
 function imageMin() {
-   const settings = {
-      optimizationLevel: 3,
-   };
-
    return src(path.img)
       .pipe(
          cache(
             imagemin([
                imageminMozjpeg({quality: 75, progressive: true}),
-               imagemin.optipng({optimizationLevel: 3}),
+               imageminOptipng({optimizationLevel: 3}),
             ]).on("error", (err) => {
                console.error("Error en imageMin:", err.message);
                this.emit("end");
@@ -71,22 +66,19 @@ function imageMin() {
       .pipe(dest("build/img"));
 }
 
-// Función para convertir imágenes a formato WebP
+// Nueva función para convertir imágenes a formato WebP con imagemin-webp
 function imgWebp() {
-   const settings = {quality: 50};
-   return src(path.img)
-      .pipe(
-         webp(settings).on("error", (err) => {
-            console.error("Error en imgWebp:", err.message);
-            this.emit("end");
-         })
-      )
+   return src("src/img/**/*.jpg") // Asegúrate de que el patrón sea correcto
+      .pipe(webp({quality: 90, method: 6}))
+      .on("error", function (err) {
+         console.error("Error en imgWebp:", err.message);
+         this.emit("end");
+      })
       .pipe(dest("build/img"));
 }
 
-// Función para convertir imágenes a formato AVIF
 function imgAvif() {
-   const settings = {quality: 50};
+   const settings = {quality: 90};
    return src(path.img)
       .pipe(
          avif(settings).on("error", (err) => {
@@ -133,5 +125,5 @@ const build = series(
 );
 
 // Exportar tareas
-export {clean, clearCache, build};
+export {clean, clearCache, build, imgWebp, imgAvif, imageMin, imgSvg};
 export default parallel(compileSass, compileJS, autoCompile, imageMin, imgWebp, imgSvg);

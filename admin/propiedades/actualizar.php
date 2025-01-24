@@ -1,15 +1,12 @@
 <?php
-
-// Validar que sea un ID válido
-$id = $_GET['id'];
-$id = filter_var($id, FILTER_VALIDATE_INT);
+require '../../includes/seguridad.php'; // Protege la página
+$id = filter_var($_GET['id'] ?? '', FILTER_VALIDATE_INT);
 
 if (!$id) {
       header('Location: /admin');
       exit;
 }
 
-// Base de Datos
 require '../../includes/config/database.php';
 $db = conectadDB();
 
@@ -30,7 +27,6 @@ try {
       $stmtVendedores->execute();
       $resultadoVendedores = $stmtVendedores->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-      error_log("Error al consultar la base de datos: " . $e->getMessage());
       die("Hubo un error en la aplicación. Inténtalo más tarde.");
 }
 
@@ -47,64 +43,60 @@ $nombreImagen = $propiedad['imagen'] ?? null;
 // Arreglo con mensajes de errores
 $errores = [];
 
-// Si el formulario se envió (POST), procesamos los datos
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      $titulo = $_POST['titulo'] ?? '';
-      $precio = $_POST['precio'] ?? '';
-      $descripcion = $_POST['descripcion'] ?? '';
-      $habitaciones = $_POST['habitaciones'] ?? '';
-      $wc = $_POST['wc'] ?? '';
-      $estacionamiento = $_POST['estacionamiento'] ?? '';
-      $vendedor_id = $_POST['vendedor'] ?? '';
-      $creado = date('Y/m/d');
+      $titulo = htmlspecialchars($_POST['titulo'] ?? '');
+      $precio = filter_var($_POST['precio'] ?? '', FILTER_VALIDATE_FLOAT);
+      $descripcion = htmlspecialchars($_POST['descripcion'] ?? '');
+      $habitaciones = filter_var($_POST['habitaciones'] ?? '', FILTER_VALIDATE_INT);
+      $wc = filter_var($_POST['wc'] ?? '', FILTER_VALIDATE_INT);
+      $estacionamiento = filter_var($_POST['estacionamiento'] ?? '', FILTER_VALIDATE_INT);
+      $vendedor_id = filter_var($_POST['vendedor'] ?? '', FILTER_VALIDATE_INT);
 
-      // Validación para la imagen
       $imagen = $_FILES['imagen'] ?? null;
 
       if ($imagen && $imagen['tmp_name']) {
-            $tamanoMaximo = 2 * 1024 * 1024; // 2 MB
+            $carpetaImagenes = '../../imagenes';
+            if (!is_dir($carpetaImagenes)) {
+                  mkdir($carpetaImagenes, 0755, true);
+            }
 
-            if ($_FILES['imagen']['size'] > $tamanoMaximo) {
+            if ($imagen['size'] > 2 * 1024 * 1024) {
                   $errores[] = "La imagen es muy pesada. Debe ser menor a 2 MB.";
             } else {
                   $formatosPermitidos = ['image/jpeg', 'image/png', 'image/gif'];
-                  $tipoImagen = $imagen['type'];
-
-                  if (!in_array($tipoImagen, $formatosPermitidos)) {
+                  if (!in_array($imagen['type'], $formatosPermitidos)) {
                         $errores[] = "El formato de la imagen no es válido.";
                   } else {
-                        $carpetaImagenes = __DIR__ . "/../../imagenes/";
-                        if (!is_dir($carpetaImagenes)) {
-                              mkdir($carpetaImagenes, 0755, true);
+                        if ($nombreImagen) {
+                              unlink("../../imagenes/$nombreImagen");
                         }
-
-                        // **Eliminar la imagen anterior si existe**
-                        if (!empty($propiedad['imagen'])) {
-                              $rutaImagen = $carpetaImagenes . "/" . $propiedad['imagen'];
-                              if (file_exists($rutaImagen) && !unlink($rutaImagen)) {
-                                    $errores[] = "No se pudo eliminar la imagen anterior.";
-                              }
-                        }
-
-                        // Crear un nombre único para la imagen nueva
                         $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
-                        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . "/" . $nombreImagen);
+                        move_uploaded_file($imagen['tmp_name'], "$carpetaImagenes/$nombreImagen");
                   }
             }
       }
 
-
-      if (!$imagen || !$imagen['tmp_name']) {
-            $nombreImagen = $propiedad['imagen'] ?? null;
-      }
-
       // Validaciones
-      // [Validaciones igual que tu código original]
+      if (!$titulo) $errores[] = "El título es obligatorio.";
+      if (!$precio || $precio <= 0) $errores[] = "El precio debe ser válido y mayor a 0.";
+      if (strlen($descripcion) < 50) $errores[] = "La descripción debe contener al menos 50 caracteres.";
+      if (!$habitaciones || $habitaciones <= 0) $errores[] = "Debe especificar un número válido de habitaciones.";
+      if (!$wc || $wc <= 0) $errores[] = "Debe especificar un número válido de baños.";
+      if (!$estacionamiento || $estacionamiento <= 0) $errores[] = "Debe especificar un número válido de estacionamientos.";
+      if (!$vendedor_id) $errores[] = "Debe seleccionar un vendedor.";
 
-      // Actualización en la base de datos
       if (empty($errores)) {
             try {
-                  $query = $db->prepare("UPDATE propiedades SET titulo = :titulo, precio = :precio, descripcion = :descripcion, habitaciones = :habitaciones, wc = :wc, estacionamiento = :estacionamiento, vendedores_id = :vendedor_id, imagen = :imagen WHERE id = :id");
+                  $query = $db->prepare("UPDATE propiedades SET 
+                titulo = :titulo, 
+                precio = :precio, 
+                descripcion = :descripcion, 
+                habitaciones = :habitaciones, 
+                wc = :wc, 
+                estacionamiento = :estacionamiento, 
+                vendedores_id = :vendedor_id, 
+                imagen = :imagen 
+                WHERE id = :id");
 
                   $query->bindValue(':titulo', $titulo);
                   $query->bindValue(':precio', $precio);
@@ -118,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                   $query->execute();
 
-                  header("Location: /admin/index.php?mensaje=2");
+                  header('Location: /admin/index.php?mensaje=2');
                   exit;
             } catch (PDOException $e) {
                   $errores[] = "Error al actualizar los datos: " . $e->getMessage();
@@ -126,79 +118,65 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }
 }
 
-// Resto de tu código del formulario
-
 require '../../includes/funciones.php';
 incluirTemplate('header');
 ?>
 
-
-
-
 <main class="contenedor seccion">
-      <h1>Actualizar</h1>
-      <a style="margin-bottom: 1.5rem;" href="/admin" class="boton boton-verde btn-admin">Volver</a>
+      <h1>Actualizar Propiedad</h1>
+      <a href="/admin" class="boton boton-verde btn-admin">Volver</a>
 
       <?php foreach ($errores as $error): ?>
             <div class="alerta error">
-                  <?php echo $error; ?>
+                  <?php echo htmlspecialchars($error); ?>
             </div>
       <?php endforeach; ?>
 
-
-      <form style="margin-top: 3rem;" class="form" method="POST" enctype="multipart/form-data">
+      <form class="form" method="POST" enctype="multipart/form-data">
             <fieldset>
                   <legend>Información General</legend>
-                  <label for="titulo">Titulo:</label>
-                  <input type="text" id="titulo" name="titulo" placeholder="Titulo Propiedad" value="<?php echo htmlspecialchars($titulo ?? ''); ?>">
+                  <label for="titulo">Título:</label>
+                  <input type="text" id="titulo" name="titulo" value="<?php echo htmlspecialchars($titulo); ?>">
 
                   <label for="precio">Precio:</label>
-                  <input type="number" id="precio" name="precio" placeholder="Precio Propiedad" value="<?php echo htmlspecialchars($precio ?? ''); ?>">
+                  <input type="text" id="precio" name="precio" value="<?php echo htmlspecialchars($precio); ?>">
 
                   <label for="descripcion">Descripción:</label>
-                  <textarea id="descripcion" name="descripcion" rows="5"><?php echo htmlspecialchars($descripcion ?? ''); ?></textarea>
-                  <p id="mensaje-descripcion" style="color: red; display: none;">La descripción debe contener al menos <span id="contador-caracteres">50</span> caracteres.</p>
-
+                  <textarea id="descripcion" name="descripcion" rows="5"><?php echo htmlspecialchars($descripcion); ?></textarea>
 
                   <label for="imagen">Imagen:</label>
                   <input type="file" id="imagen" name="imagen" accept="image/*">
-
-                  <?php if (!empty($nombreImagen)): ?>
-                        <p>Imagen actual:</p>
-                        <img src="/imagenes/<?php echo htmlspecialchars($nombreImagen); ?>" alt="Imagen de la propiedad" style="width: 200px; height: auto; margin-top: 10px; border: 1px solid #ddd;">
+                  <?php if ($nombreImagen): ?>
+                        <img src="/imagenes/<?php echo htmlspecialchars($nombreImagen); ?>" alt="Imagen" style="width:200px;">
                   <?php endif; ?>
             </fieldset>
 
             <fieldset>
                   <legend>Información Propiedad</legend>
                   <label for="habitaciones">Habitaciones:</label>
-                  <input type="number" id="habitaciones" name="habitaciones" placeholder="Ej: 3" min="1" max="9" value="<?php echo htmlspecialchars($habitaciones ?? ''); ?>">
+                  <input type="number" id="habitaciones" name="habitaciones" value="<?php echo htmlspecialchars($habitaciones); ?>">
 
                   <label for="wc">Baños:</label>
-                  <input type="number" id="wc" name="wc" placeholder="Ej: 3" min="1" max="9" value="<?php echo htmlspecialchars($wc ?? ''); ?>">
+                  <input type="number" id="wc" name="wc" value="<?php echo htmlspecialchars($wc); ?>">
 
                   <label for="estacionamiento">Estacionamiento:</label>
-                  <input type="number" id="estacionamiento" name="estacionamiento" placeholder="Ej: 3" min="1" max="9" value="<?php echo htmlspecialchars($estacionamiento ?? ''); ?>">
+                  <input type="number" id="estacionamiento" name="estacionamiento" value="<?php echo htmlspecialchars($estacionamiento); ?>">
             </fieldset>
 
             <fieldset>
                   <legend>Vendedor</legend>
                   <select name="vendedor">
-                        <option selected disabled>--Seleccione--</option>
+                        <option value="" disabled>--Seleccione--</option>
                         <?php foreach ($resultadoVendedores as $vendedor): ?>
-                              <option value="<?php echo $vendedor['id']; ?>"
-                                    <?php echo ($vendedor_id == $vendedor['id']) ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars($vendedor['nombre'] . " " . $vendedor['apellido']); ?>
+                              <option value="<?php echo $vendedor['id']; ?>" <?php echo $vendedor_id == $vendedor['id'] ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($vendedor['nombre'] . ' ' . $vendedor['apellido']); ?>
                               </option>
                         <?php endforeach; ?>
                   </select>
             </fieldset>
 
-
             <input type="submit" value="Actualizar Propiedad" class="boton boton-verde">
       </form>
-
-
 </main>
 
 <?php incluirTemplate('footer'); ?>

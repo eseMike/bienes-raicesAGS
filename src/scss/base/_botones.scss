@@ -9,12 +9,15 @@
    @include mix.btn-yellow;
    margin-top: 4rem;
    min-width: 230px;
+   display: grid;
 }
 
 .boton-rojo-block {
    @include mix.boton(var.$rojo, block);
+   display: grid;
 }
 
 .boton-verde-block {
    @include mix.boton(var.$softGold, block);
+   display: grid;
 }

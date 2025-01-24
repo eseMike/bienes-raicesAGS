@@ -1,10 +1,11 @@
 <?php
 
 //Importar la conexión
+require '../includes/seguridad.php'; // Validar sesión
 require '../includes/config/database.php';
 $db = conectadDB();
 
-//Escribir el query
+//Escribir el queryurl 
 $query = "SELECT * FROM propiedades";
 //Consultar la BD
 $resultadoConsulta = $db->query($query);
@@ -59,7 +60,8 @@ incluirTemplate('header');
                               </td>
                               <td><?php echo '$ ' . number_format($propiedad['precio'], 2, '.', ','); ?></td>
                               <td>
-                                    <a class="boton-verde-block" href="admin/propiedades/actualizar.php?id=<?php echo htmlspecialchars($propiedad['id']); ?>">Actualizar</a>
+                                    <!-- <a class="boton-verde-block" href="admin/propiedades/actualizar.php?id=<?php echo htmlspecialchars($propiedad['id']); ?>">Actualizar</a>   -->
+                                    <a class="boton-verde-block" href="<?php echo RUTA_URL; ?>admin/propiedades/actualizar.php?id=<?php echo htmlspecialchars($propiedad['id']); ?>">Actualizar</a>
                                     <a class="boton-rojo-block" href="/admin/propiedades/eliminar.php?id=<?php echo htmlspecialchars($propiedad['id']); ?>" onclick="return confirm('¿Estás seguro de eliminar esta propiedad?');">Eliminar</a>
                               </td>
                         </tr>

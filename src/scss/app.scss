@@ -28,3 +28,33 @@
 .bg-light {
    background-color: none !important;
 }
+
+.txt-header {
+   color: softGold !important;
+}
+
+h1.mi-clase {
+   font-size: 2.7rem !important;
+   color: white !important;
+   text-align: center;
+
+   position: relative;
+   top: 0rem;
+   max-width: 330px;
+   font-weight: bold;
+   margin: auto;
+   padding-bottom: 1.2rem;
+   @media (min-width: 768px) {
+      font-size: 5rem !important;
+      text-align: center;
+
+      max-width: 900px;
+      padding-bottom: 3.4rem;
+   }
+}
+
+button {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}

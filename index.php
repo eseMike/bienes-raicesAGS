@@ -46,109 +46,11 @@ incluirTemplate('header',  $inicio = true);
 
    <!-- propiedades  -->
    <section class="seccion contenedor">
-      <h2>Propiedades en renta</h2>
-      <div data-aos="fade-up" class="contenedor-anuncios">
-         <!-- anuncio1 -->
-         <div class="anuncio">
-            <picture>
-               <img loading="lazy" src="build/img/anuncio1.avif" alt="anuncio" />
-               <source srcset="build/img/anuncio1.webp" type="image/webp" />
-               <source srcset="build/img/anuncio1.jpg" type="image/jpg" />
-            </picture>
-
-            <div class="contenido-anuncio">
-               <h3>Casa de lujo en el lago</h3>
-               <p>
-                  Casa en el lago con excelente vista, acabados de lujo a un
-                  excelente precio
-               </p>
-               <p class="precio">$3,000,000</p>
-               <ul class="iconos-caracteristicas">
-                  <li>
-                     <i class="fa-solid fa-toilet"></i>
-                     <p>3</p>
-                  </li>
-                  <li>
-                     <i class="fa-solid fa-car"></i>
-                     <p>2</p>
-                  </li>
-                  <li>
-                     <i class="fa-solid fa-bed"></i>
-                     <p>4</p>
-                  </li>
-               </ul>
-
-               <a class="boton boton-blue" href="anuncio.php">Ver propiedad</a>
-            </div>
-         </div>
-         <!-- anuncio2 -->
-         <div class="anuncio">
-            <picture>
-               <img loading="lazy" src="build/img/anuncio2.avif" alt="anuncio" />
-               <source srcset="build/img/anuncio2.webp" type="image/webp" />
-               <source srcset="build/img/anuncio2.jpg" type="image/jpg" />
-            </picture>
-
-            <div class="contenido-anuncio">
-               <h3>Casa terminados de lujo</h3>
-               <p>
-                  Casa en el lago con excelente vista, acabados de lujo a un
-                  excelente precio
-               </p>
-               <p class="precio">$3,000,000</p>
-               <ul class="iconos-caracteristicas">
-                  <li>
-                     <i class="fa-solid fa-toilet"></i>
-                     <p>3</p>
-                  </li>
-                  <li>
-                     <i class="fa-solid fa-car"></i>
-                     <p>2</p>
-                  </li>
-                  <li>
-                     <i class="fa-solid fa-bed"></i>
-                     <p>4</p>
-                  </li>
-               </ul>
-
-               <a class="boton boton-blue" href="anuncio.php">Ver propiedad</a>
-            </div>
-         </div>
-         <!-- anuncio 3 -->
-         <div class="anuncio">
-            <picture>
-               <img loading="lazy" src="build/img/anuncio3.avif" alt="anuncio" />
-               <source srcset="build/img/anuncio3.webp" type="image/webp" />
-               <source srcset="build/img/anuncio3.jpg" type="image/jpg" />
-            </picture>
-
-            <div class="contenido-anuncio">
-               <h3>Casa con alberca</h3>
-               <p>
-                  Casa en el lago con excelente vista, acabados de lujo a un
-                  excelente precio
-               </p>
-               <p class="precio">$3,000,000</p>
-               <ul class="iconos-caracteristicas">
-                  <li>
-                     <i class="fa-solid fa-toilet"></i>
-                     <p>3</p>
-                  </li>
-                  <li>
-                     <i class="fa-solid fa-car"></i>
-                     <p>2</p>
-                  </li>
-                  <li>
-                     <i class="fa-solid fa-bed"></i>
-                     <p>4</p>
-                  </li>
-               </ul>
-
-               <a class="boton boton-blue" href="anuncio.php">Ver propiedad</a>
-            </div>
-         </div>
-      </div>
-
+      <h2>Propiedades en venta</h2>
+      <?php
+      $limite = 3;
+      include 'includes/templates/anuncios.php';
+      ?>
       <div class="ver-todas">
          <a class="btn-yellow" href="anuncios.php">Ver todas</a>
       </div>

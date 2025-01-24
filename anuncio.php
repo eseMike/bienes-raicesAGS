@@ -1,4 +1,37 @@
 <?php
+
+// Validamos que exista el id
+$id = $_GET['id'];
+$id = filter_var($id, FILTER_VALIDATE_INT);
+
+if (!$id) {
+   die('ID no válido');
+}
+
+// Importar la conexión
+require __DIR__ . '/includes/config/database.php';
+
+$db = conectadDB();
+
+// Consultar
+$query = "SELECT * FROM propiedades WHERE id = $id";
+
+// Preparar la consulta 
+$stmt = $db->prepare($query);
+$stmt->execute();
+
+// Obtener resultados
+$propiedad = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Verificar si la propiedad existe antes de acceder a sus datos
+if (!$propiedad) {
+   die('No se encontró la propiedad.');
+}
+
+// Depuración de la imagen
+var_dump($propiedad['imagen']);
+die();
+
 require 'includes/funciones.php';
 incluirTemplate('header');
 ?>
@@ -11,50 +44,33 @@ incluirTemplate('header');
       <i class="fa-brands fa-square-whatsapp whats-icon"></i>
    </a>
    <main class="contenedor seccion">
-      <h1>Casa en venta frente al bosque</h1>
-
-      <picture>
-         <img
-            loading="lazy"
-            src="build/img/destacada.avif"
-            alt="Imagen propiedad" />
-         <source srcset="build/img/destacada.webp" type="image/webp" />
-         <source srcset="build/img/destacada.jpg" type="image/jpeg" />
-      </picture>
+      <h1><?php echo $propiedad['titulo']; ?></h1>
+      <img loading="lazy" src="/build/img/<?php echo $propiedad['imagen']; ?>" alt="anuncio" />
       <div class="resumen-propiedad">
-         <p class="precio">$3,000,000</p>
+         <p class="precio">$<?php echo $propiedad['precio']; ?></p>
          <ul class="iconos-caracteristicas">
             <li>
                <i class="fa-solid fa-toilet"></i>
-               <p>3</p>
+               <p><?php echo $propiedad['wc']; ?></p>
             </li>
             <li>
                <i class="fa-solid fa-car"></i>
-               <p>2</p>
+               <p><?php echo $propiedad['estacionamiento']; ?></p>
             </li>
             <li>
                <i class="fa-solid fa-bed"></i>
-               <p>4</p>
+               <p><?php echo $propiedad['habitaciones']; ?></p>
             </li>
          </ul>
 
          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta dolorem
-            voluptatibus aliquam blanditiis earum itaque suscipit molestias
-            aspernatur omnis, fugit, reprehenderit similique alias quidem? Totam
-            maxime vero porro dolorem maiores. Omnis, ipsa? Quas qui ad accusantium
-            molestias aliquid consequatur autem saepe nesciunt soluta eveniet ipsam,
-            minima omnis rerum quod iure! Reprehenderit tempore magnam repellat
-            animi iure obcaecati eum placeat officiis? Ipsam cupiditate ea at qui
-            quaerat libero, nisi dolorem expedita ullam optio cum totam explicabo
-            doloremque eveniet maiores? Porro dolorum facilis obcaecati quod fugit,
-            distinctio nostrum dolorem totam molestiae aliquid.
+            <?php echo $propiedad['descripcion']; ?>
          </p>
       </div>
    </main>
 </div>
 
-
 <?php
+$db = null;
 include 'includes/templates/footer.php';
 ?>
