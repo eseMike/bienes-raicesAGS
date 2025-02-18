@@ -19,8 +19,12 @@ $stmt->execute();
         <!-- anuncios -->
         <div class="anuncio">
             <picture>
-                <img loading="lazy" src="/imagenes/<?php echo $propiedad['imagen']; ?>" alt="anuncio" />
+                <source srcset="/imagenes/<?php echo pathinfo($propiedad['imagen'], PATHINFO_FILENAME); ?>.webp" type="image/webp">
+                <source srcset="/imagenes/<?php echo $propiedad['imagen']; ?>" type="image/jpeg">
+                <img loading="lazy" src="/imagenes/<?php echo $propiedad['imagen']; ?>" alt="anuncio">
             </picture>
+
+
 
             <div class="contenido-anuncio">
                 <h3><?php echo $propiedad['titulo']; ?></h3>

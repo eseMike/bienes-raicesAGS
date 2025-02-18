@@ -12,20 +12,20 @@
 
       nav {
          .link-footer {
-            color: var.$softGold !important;
+            color: var.$softGold;
             font-size: 1.5rem;
             text-align: center;
             text-decoration: none;
             margin-right: 1rem;
-            background-image: linear-gradient(var.$softGold, var.$gold) !important;
-            background-position: 0% 100% !important;
-            background-repeat: no-repeat !important;
-            background-size: 0% 2px !important;
-            transition: background-size 0.3s !important;
+            background-image: linear-gradient(var.$softGold, var.$gold);
+            background-position: 0% 100%;
+            background-repeat: no-repeat;
+            background-size: 0% 2px;
+            transition: background-size 0.3s ease-in-out;
 
             &:hover,
-            :focus {
-               background-size: 100% 2px !important;
+            &:focus {
+               background-size: 100% 2px;
             }
 
             @media (min-width: 768px) {
@@ -35,10 +35,11 @@
       }
 
       img {
-         width: 80px;
+         max-width: 200px;
+         width: 100%; // Permite que la imagen se adapte sin perder proporción
 
          @media (min-width: 768px) {
-            width: 200px;
+            max-width: 200px;
          }
       }
    }

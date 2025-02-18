@@ -1,7 +1,7 @@
 @use "../base/variables" as vars;
 
 .imagen-contacto {
-   background-image: url(../../../build/img/encuentra.avif);
+   background-image: url(../../../build/img/encuentra.webp);
    max-width: 100%;
    background-position: center center;
    background-size: cover;
@@ -18,10 +18,17 @@
    }
 
    h2 {
-      color: vars.$softGold !important; // Se refiere a las variables usando el prefijo `vars`
+      color: vars.$softGold;
    }
 
    p {
-      color: vars.$blanco; // Se asegura de usar la variable `$blanco` correctamente
+      color: vars.$blanco;
+   }
+}
+
+/* Soporte para AVIF en navegadores compatibles */
+@supports (background-image: url("data:image/avif;base64,UklGR")) {
+   .imagen-contacto {
+      background-image: url(../../../build/img/encuentra.avif);
    }
 }

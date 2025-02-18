@@ -1,47 +1,35 @@
 @use "base/variables" as var;
 
 .navbar {
-   background-color: var.$marinoDark !important;
+   background-color: var.$marinoDark;
    position: relative;
 
    .container-fluid {
-      .navbar-brand {
-         img {
-            width: 100px;
-            height: auto;
-            @media (min-width: 768px) {
-               width: 220px;
-            }
-         }
+      .navbar-brand img {
+         max-width: 220px;
+         height: auto;
       }
-      .navbar-collapse {
-         .navbar-nav {
-            .nav-item {
-               margin-right: 1rem;
-               .nav-link {
-                  color: var.$softGold !important;
-                  font-size: 2.2rem;
-                  text-align: center;
 
-                  @media (min-width: 768px) {
-                     text-align: start;
+      .navbar-collapse .navbar-nav .nav-item {
+         margin-right: 1rem;
 
-                     // transition
-                     text-decoration: none !important;
-                     background-image: linear-gradient(
-                        var.$softGold,
-                        var.$gold
-                     ) !important;
-                     background-position: 0% 100% !important;
-                     background-repeat: no-repeat !important;
-                     background-size: 0% 2px !important;
-                     transition: background-size 0.3s !important;
+         .nav-link {
+            color: var.$softGold;
+            font-size: 2.2rem;
+            text-align: center;
 
-                     &:hover,
-                     :focus {
-                        background-size: 100% 2px !important;
-                     }
-                  }
+            @media (min-width: 768px) {
+               text-align: start;
+               text-decoration: none;
+               background-image: linear-gradient(var.$softGold, var.$gold);
+               background-position: 0% 100%;
+               background-repeat: no-repeat;
+               background-size: 0% 2px;
+               transition: background-size 0.3s;
+
+               &:hover,
+               &:focus {
+                  background-size: 100% 2px;
                }
             }
          }

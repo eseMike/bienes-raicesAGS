@@ -1,14 +1,16 @@
-@use "../base/variables" as vars;
+@use "../base/variables" as *;
 
 .testimonial {
-   background-color: vars.$marinoDark;
-   font-size: 2.4rem !important;
+   background-color: $marinoDark;
+   font-size: 2.4rem;
    padding: 2rem;
-   color: vars.$softGold;
+   color: $softGold;
    border-radius: 25px;
+   max-width: 80%;
+   margin: 0 auto;
 
    p {
-      color: vars.$blanco;
+      color: $blanco;
       text-align: end;
       font-style: italic;
    }

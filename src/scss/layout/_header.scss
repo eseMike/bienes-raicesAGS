@@ -1,36 +1,26 @@
 @use "base/variables" as var;
 @use "base/mixins";
 
-.no-webp {
-   .inicio {
-      background-image: url("../../build/img/header.webp");
-      max-width: 100%;
-   }
+// Evita la duplicación de background-image
+.no-webp .inicio,
+.webp .inicio {
+   background-image: url("../../build/img/header.webp");
+   max-width: 100%;
 }
 
 .webp {
-   .inicio {
-      background-image: url("../../build/img/header.webp");
-      max-width: 100%;
-   }
-
    .header {
-      background-color: var.$marinoDark !important;
-      // padding: 2rem 0 2rem 0;
+      background-color: var.$marinoDark;
       .navbar {
-         background-color: transparent !important;
+         background-color: transparent;
       }
 
-      &.inicio {
+      &.inicio,
+      &.inicio .contenido-header {
          background-position: center center;
          background-size: cover;
          @include mixins.tablet {
             min-height: 70rem;
-         }
-         .contenido-header {
-            @include mixins.tablet {
-               min-height: 70rem;
-            }
          }
       }
    }
@@ -39,10 +29,12 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+
       h1 {
          text-align: center;
          color: var.$softGold;
          margin-bottom: 3rem;
+
          @media (min-width: 768px) {
             text-align: start;
          }

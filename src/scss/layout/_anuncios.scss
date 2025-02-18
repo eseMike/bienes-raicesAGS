@@ -15,23 +15,30 @@
    background: #ededed;
    box-shadow: 20px 20px 60px #c9c9c9, -20px -20px 60px #ffffff;
    margin-bottom: 2rem;
+
    picture {
+      display: block;
       img {
          border-radius: 3rem;
+         width: 100%;
+         height: auto;
+         object-fit: cover; // Evita deformaciones
       }
    }
+
    .contenido-anuncio {
       padding: 2rem;
    }
+
    h3 {
       margin-bottom: 0;
-      font-size: 2.7rem !important;
-      color: vars.$marino; // Referencia explícita de la variable
+      font-size: 2.7rem;
+      color: vars.$marino;
    }
 }
 
 .precio {
-   color: vars.$softGold; // Referencia explícita de la variable
+   color: vars.$softGold;
    font-weight: 500;
    font-size: 2.4rem;
 }
@@ -44,20 +51,22 @@
    list-style: none;
    max-width: 40rem;
    padding-left: 0;
-   margin-top: 3rem;
-   margin-bottom: 3rem;
+   margin: 3rem 0;
+
    li {
       display: flex;
       align-items: center;
       gap: 1rem;
+
       p {
          margin-bottom: 0;
-         color: vars.$softGold; // Referencia explícita de la variable
-         font-family: 2.4rem;
+         color: vars.$softGold;
+         font-size: 2.4rem; // Corregido (antes era `font-family: 2.4rem;`)
          font-weight: 500;
       }
+
       svg {
-         color: vars.$marino; // Referencia explícita de la variable
+         color: vars.$marino;
          font-size: 3rem;
       }
    }

@@ -15,13 +15,11 @@ incluirTemplate('header');
       <h1>Contacto</h1>
 
       <picture>
-         <img
-            loading="lazy"
-            src="build/img/destacada3.avif"
-            alt="Imagen propiedad" />
          <source srcset="build/img/destacada3.webp" type="image/webp" />
          <source srcset="build/img/destacada3.jpg" type="image/jpeg" />
+         <img loading="lazy" src="build/img/destacada3.webp" alt="Imagen propiedad" />
       </picture>
+
 
       <h2>Llene el formulario y nos pondremos en contacto de inmediato con ud.</h2>
 

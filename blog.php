@@ -16,13 +16,11 @@ incluirTemplate('header');
       <article class="entrada-blog">
          <div class="imagen">
             <picture>
-               <img
-                  loading="lazy"
-                  src="build/img/anuncio1.avif"
-                  alt="Entrada blog" />
                <source srcset="build/img/blog1.webp" type="image/webp" />
                <source srcset="build/img/blog1.jpg" type="image/jpeg" />
+               <img loading="lazy" src="build/img/blog1.jpg" alt="Entrada blog" />
             </picture>
+
          </div>
 
          <div class="texto-entrada">
@@ -43,12 +41,9 @@ incluirTemplate('header');
       <article class="entrada-blog">
          <div class="imagen">
             <picture>
-               <img
-                  loading="lazy"
-                  src="build/img/anuncio2.avif"
-                  alt="Entrada blog" />
                <source srcset="build/img/blog2.webp" type="image/webp" />
                <source srcset="build/img/blog2.jpg" type="image/jpeg" />
+               <img loading="lazy" src="build/img/blog2.jpg" alt="Entrada blog" />
             </picture>
          </div>
 
@@ -70,12 +65,9 @@ incluirTemplate('header');
       <article class="entrada-blog">
          <div class="imagen">
             <picture>
-               <img
-                  loading="lazy"
-                  src="build/img/anuncio3.avif"
-                  alt="Entrada blog" />
                <source srcset="build/img/blog3.webp" type="image/webp" />
                <source srcset="build/img/blog3.jpg" type="image/jpeg" />
+               <img loading="lazy" src="build/img/blog3.jpg" alt="Entrada blog" />
             </picture>
          </div>
 
@@ -97,12 +89,9 @@ incluirTemplate('header');
       <article class="entrada-blog">
          <div class="imagen">
             <picture>
-               <img
-                  loading="lazy"
-                  src="build/img/anuncio4.avif"
-                  alt="Entrada blog" />
                <source srcset="build/img/blog4.webp" type="image/webp" />
                <source srcset="build/img/blog4.jpg" type="image/jpeg" />
+               <img loading="lazy" src="build/img/blog4.jpg" alt="Entrada blog" />
             </picture>
          </div>
 

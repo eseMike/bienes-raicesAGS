@@ -1,17 +1,18 @@
 <?php
-require '../../includes/seguridad.php'; // Protege la página
-$id = filter_var($_GET['id'] ?? '', FILTER_VALIDATE_INT);
+require '../../includes/seguridad.php';
+require '../../includes/config/database.php';
+require '../../includes/funciones.php';
 
+$id = filter_var($_GET['id'] ?? '', FILTER_VALIDATE_INT);
 if (!$id) {
       header('Location: /admin');
       exit;
 }
 
-require '../../includes/config/database.php';
 $db = conectadDB();
 
+// Obtener la propiedad
 try {
-      // Obtener los datos de la propiedad
       $stmt = $db->prepare("SELECT * FROM propiedades WHERE id = :id");
       $stmt->bindValue(':id', $id, PDO::PARAM_INT);
       $stmt->execute();
@@ -22,15 +23,15 @@ try {
             exit;
       }
 
-      // Consultar para obtener los vendedores
+      // Obtener vendedores
       $stmtVendedores = $db->prepare("SELECT * FROM vendedores");
       $stmtVendedores->execute();
-      $resultadoVendedores = $stmtVendedores->fetchAll(PDO::FETCH_ASSOC);
+      $vendedores = $stmtVendedores->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
       die("Hubo un error en la aplicación. Inténtalo más tarde.");
 }
 
-// Variables iniciales obtenidas de la base de datos
+// Inicialización de variables
 $titulo = $propiedad['titulo'] ?? '';
 $precio = $propiedad['precio'] ?? '';
 $descripcion = $propiedad['descripcion'] ?? '';
@@ -40,7 +41,7 @@ $estacionamiento = $propiedad['estacionamiento'] ?? '';
 $vendedor_id = $propiedad['vendedores_id'] ?? null;
 $nombreImagen = $propiedad['imagen'] ?? null;
 
-// Arreglo con mensajes de errores
+// Errores
 $errores = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -51,9 +52,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $wc = filter_var($_POST['wc'] ?? '', FILTER_VALIDATE_INT);
       $estacionamiento = filter_var($_POST['estacionamiento'] ?? '', FILTER_VALIDATE_INT);
       $vendedor_id = filter_var($_POST['vendedor'] ?? '', FILTER_VALIDATE_INT);
-
       $imagen = $_FILES['imagen'] ?? null;
 
+      // Validaciones
+      $validaciones = [
+            'titulo' => "El título es obligatorio.",
+            'precio' => (!$precio || $precio <= 0) ? "El precio debe ser válido y mayor a 0." : null,
+            'descripcion' => (strlen($descripcion) < 50) ? "La descripción debe contener al menos 50 caracteres." : null,
+            'habitaciones' => (!$habitaciones || $habitaciones <= 0) ? "Debe especificar un número válido de habitaciones." : null,
+            'wc' => (!$wc || $wc <= 0) ? "Debe especificar un número válido de baños." : null,
+            'estacionamiento' => (!$estacionamiento || $estacionamiento <= 0) ? "Debe especificar un número válido de estacionamientos." : null,
+            'vendedor_id' => (!$vendedor_id) ? "Debe seleccionar un vendedor." : null
+      ];
+
+      foreach ($validaciones as $key => $mensaje) {
+            if ($mensaje) $errores[] = $mensaje;
+      }
+
+      // Manejo de imágenes
       if ($imagen && $imagen['tmp_name']) {
             $carpetaImagenes = '../../imagenes';
             if (!is_dir($carpetaImagenes)) {
@@ -63,27 +79,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($imagen['size'] > 2 * 1024 * 1024) {
                   $errores[] = "La imagen es muy pesada. Debe ser menor a 2 MB.";
             } else {
-                  $formatosPermitidos = ['image/jpeg', 'image/png', 'image/gif'];
-                  if (!in_array($imagen['type'], $formatosPermitidos)) {
+                  $formatosPermitidos = ['image/jpeg', 'image/png', 'image/webp'];
+                  $tipoImagen = mime_content_type($imagen['tmp_name']);
+
+                  if (!in_array($tipoImagen, $formatosPermitidos)) {
                         $errores[] = "El formato de la imagen no es válido.";
                   } else {
                         if ($nombreImagen) {
                               unlink("../../imagenes/$nombreImagen");
                         }
-                        $nombreImagen = md5(uniqid(rand(), true)) . ".jpg";
+                        $nombreImagen = md5(uniqid(rand(), true)) . ".webp";
                         move_uploaded_file($imagen['tmp_name'], "$carpetaImagenes/$nombreImagen");
                   }
             }
       }
-
-      // Validaciones
-      if (!$titulo) $errores[] = "El título es obligatorio.";
-      if (!$precio || $precio <= 0) $errores[] = "El precio debe ser válido y mayor a 0.";
-      if (strlen($descripcion) < 50) $errores[] = "La descripción debe contener al menos 50 caracteres.";
-      if (!$habitaciones || $habitaciones <= 0) $errores[] = "Debe especificar un número válido de habitaciones.";
-      if (!$wc || $wc <= 0) $errores[] = "Debe especificar un número válido de baños.";
-      if (!$estacionamiento || $estacionamiento <= 0) $errores[] = "Debe especificar un número válido de estacionamientos.";
-      if (!$vendedor_id) $errores[] = "Debe seleccionar un vendedor.";
 
       if (empty($errores)) {
             try {
@@ -113,12 +122,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   header('Location: /admin/index.php?mensaje=2');
                   exit;
             } catch (PDOException $e) {
-                  $errores[] = "Error al actualizar los datos: " . $e->getMessage();
+                  error_log("Error al actualizar la propiedad: " . $e->getMessage());
+                  $errores[] = "Error al actualizar los datos. Intente nuevamente.";
             }
       }
 }
 
-require '../../includes/funciones.php';
 incluirTemplate('header');
 ?>
 
@@ -161,18 +170,6 @@ incluirTemplate('header');
 
                   <label for="estacionamiento">Estacionamiento:</label>
                   <input type="number" id="estacionamiento" name="estacionamiento" value="<?php echo htmlspecialchars($estacionamiento); ?>">
-            </fieldset>
-
-            <fieldset>
-                  <legend>Vendedor</legend>
-                  <select name="vendedor">
-                        <option value="" disabled>--Seleccione--</option>
-                        <?php foreach ($resultadoVendedores as $vendedor): ?>
-                              <option value="<?php echo $vendedor['id']; ?>" <?php echo $vendedor_id == $vendedor['id'] ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars($vendedor['nombre'] . ' ' . $vendedor['apellido']); ?>
-                              </option>
-                        <?php endforeach; ?>
-                  </select>
             </fieldset>
 
             <input type="submit" value="Actualizar Propiedad" class="boton boton-verde">

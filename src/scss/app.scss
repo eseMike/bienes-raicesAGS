@@ -1,12 +1,13 @@
+// 🟢 Base
 @use "base/normalize";
-@use "./base/variables" as *;
+@use "base/variables" as *;
 @use "base/mixins" as mix;
 @use "base/globales";
 @use "base/utilidades";
 @use "base/botones";
 @use "base/darkMode";
 
-// ------ UI ------
+// 🟢 Componentes UI
 @use "layout/header";
 @use "layout/footer";
 @use "layout/navegacion";
@@ -17,37 +18,34 @@
 @use "layout/testimoniales";
 @use "layout/formulario";
 
-// Internas
+// 🟢 Páginas internas
 @use "internas/nosotros";
 @use "internas/admin";
 
+// 🟢 Estilos específicos
 .header {
-   background-color: #04293a !important;
+   background-color: $marinoDark; // Se reemplaza el color hexadecimal por la variable
 }
 
 .bg-light {
-   background-color: none !important;
+   background-color: transparent !important;
 }
 
 .txt-header {
-   color: softGold !important;
+   color: $softGold !important;
 }
 
 h1.mi-clase {
-   font-size: 2.7rem !important;
-   color: white !important;
+   font-size: 2.7rem;
+   color: $blanco;
    text-align: center;
-
-   position: relative;
-   top: 0rem;
-   max-width: 330px;
    font-weight: bold;
+   max-width: 330px;
    margin: auto;
    padding-bottom: 1.2rem;
-   @media (min-width: 768px) {
-      font-size: 5rem !important;
-      text-align: center;
 
+   @media (min-width: 768px) {
+      font-size: 5rem;
       max-width: 900px;
       padding-bottom: 3.4rem;
    }

@@ -22,7 +22,5 @@ incluirTemplate('header');
 </div>
 
 <footer class="footer">
-
-   <?php
-   include 'includes/templates/footer.php';
-   ?>
+   <?php include 'includes/templates/footer.php'; ?>
+</footer>

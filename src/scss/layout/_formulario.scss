@@ -1,45 +1,53 @@
-@use "../base/variables" as vars;
+@use "../base/variables" as var;
 
 .form {
    fieldset {
-      border: 1.5px solid vars.$marino;
+      border: 1.5px solid var.$marino;
       border-radius: 25px;
       padding: 2rem;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem; // Reduje un poco el margen para mejor diseño en móvil
+
+      @media (min-width: 768px) {
+         margin-bottom: 3rem;
+      }
    }
+
    p {
       font-size: 1.4rem;
-      color: vars.$marino;
+      color: var.$marino;
    }
+
    legend {
       font-size: 2rem;
-      color: vars.$marino;
+      color: var.$marino;
       font-weight: 400;
    }
 
    label {
       font-weight: bold;
-      text-transform: uppercase;
+      text-transform: capitalize; // Se cambia a capitalizar solo la primera letra
       display: block;
    }
 
-   input:not([type="submit"]),
+   input:not([type="submit"]):not([type="radio"]),
    textarea,
    select {
       padding: 1rem;
       display: block;
       width: 100%;
-      background-color: vars.$blanco;
-      border: 1px solid vars.$softGold;
+      background-color: var.$blanco;
+      border: 1px solid var.$softGold;
       border-radius: 1rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem; // Ajustado para mejor estética
    }
+
    .forma-contacto {
       max-width: 30rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
    }
+
    input[type="radio"] {
       margin: 0;
       width: auto;

@@ -76,12 +76,9 @@ incluirTemplate('header',  $inicio = true);
          <article data-aos="fade-up-right" class="entrada-blog">
             <div class="imagen">
                <picture>
-                  <img
-                     loading="lazy"
-                     src="build/img/anuncio1.avif"
-                     alt="Entrada blog" />
                   <source srcset="build/img/blog1.webp" type="image/webp" />
-                  <source srcset="build/img/blog1.jpg" type="image/jpeg" />
+                  <source srcset="build/img/blog1.webp" type="image/jpeg" />
+                  <img loading="lazy" src="build/img/blog1.webp" alt="Entrada blog" />
                </picture>
             </div>
 
@@ -103,12 +100,10 @@ incluirTemplate('header',  $inicio = true);
          <article data-aos="fade-down-right" class="entrada-blog">
             <div class="imagen">
                <picture>
-                  <img
-                     loading="lazy"
-                     src="build/img/anuncio2.avif"
-                     alt="Entrada blog" />
+
                   <source srcset="build/img/blog2.webp" type="image/webp" />
-                  <source srcset="build/img/blog2.jpg" type="image/jpeg" />
+                  <source srcset="build/img/blog2.webp" type="image/jpeg" />
+                  <img loading="lazy" src="build/img/anuncio2.webp" alt="Entrada blog" />
                </picture>
             </div>
 

@@ -1,7 +1,7 @@
 <?php
 
-// Validamos que exista el id
-$id = $_GET['id'];
+// Validamos que exista el id y que sea un número entero válido
+$id = $_GET['id'] ?? null;
 $id = filter_var($id, FILTER_VALIDATE_INT);
 
 if (!$id) {
@@ -13,11 +13,10 @@ require __DIR__ . '/includes/config/database.php';
 
 $db = conectadDB();
 
-// Consultar
-$query = "SELECT * FROM propiedades WHERE id = $id";
-
-// Preparar la consulta 
+// Consultar de manera segura con `prepare()`
+$query = "SELECT * FROM propiedades WHERE id = :id";
 $stmt = $db->prepare($query);
+$stmt->bindParam(':id', $id, PDO::PARAM_INT);
 $stmt->execute();
 
 // Obtener resultados
@@ -28,10 +27,7 @@ if (!$propiedad) {
    die('No se encontró la propiedad.');
 }
 
-// Depuración de la imagen
-var_dump($propiedad['imagen']);
-die();
-
+// Importar el header
 require 'includes/funciones.php';
 incluirTemplate('header');
 ?>
@@ -43,11 +39,18 @@ incluirTemplate('header');
       href="https://api.whatsapp.com/send?phone=525578139893&text=Hola, me interesan sus servicios!">
       <i class="fa-brands fa-square-whatsapp whats-icon"></i>
    </a>
+
    <main class="contenedor seccion">
-      <h1><?php echo $propiedad['titulo']; ?></h1>
-      <img loading="lazy" src="/build/img/<?php echo $propiedad['imagen']; ?>" alt="anuncio" />
+      <h1><?php echo htmlspecialchars($propiedad['titulo']); ?></h1>
+
+      <picture>
+         <source srcset="/imagenes/<?php echo pathinfo($propiedad['imagen'], PATHINFO_FILENAME); ?>.webp" type="image/webp">
+         <source srcset="/imagenes/<?php echo $propiedad['imagen']; ?>" type="image/jpeg">
+         <img loading="lazy" src="/imagenes/<?php echo $propiedad['imagen']; ?>" alt="anuncio" />
+      </picture>
+
       <div class="resumen-propiedad">
-         <p class="precio">$<?php echo $propiedad['precio']; ?></p>
+         <p class="precio">$<?php echo number_format($propiedad['precio'], 2); ?></p>
          <ul class="iconos-caracteristicas">
             <li>
                <i class="fa-solid fa-toilet"></i>
@@ -64,13 +67,14 @@ incluirTemplate('header');
          </ul>
 
          <p>
-            <?php echo $propiedad['descripcion']; ?>
+            <?php echo nl2br(htmlspecialchars($propiedad['descripcion'])); ?>
          </p>
       </div>
    </main>
 </div>
 
 <?php
+// Cerrar conexión
 $db = null;
 include 'includes/templates/footer.php';
 ?>

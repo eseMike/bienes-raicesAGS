@@ -15,13 +15,11 @@ incluirTemplate('header');
       <h1>Guía para la decoración de tu hogar</h1>
 
       <picture>
-         <img
-            loading="lazy"
-            src="build/img/destacada2.avif"
-            alt="Imagen propiedad" />
          <source srcset="build/img/destacada2.webp" type="image/webp" />
          <source srcset="build/img/destacada2.jpg" type="image/jpeg" />
+         <img loading="lazy" src="build/img/destacada2.webp" alt="Imagen propiedad" />
       </picture>
+
       <p class="informacion-meta">
          Escrito el <span>20-10-24</span> por: <span>Admin</span>
       </p>

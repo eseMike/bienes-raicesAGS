@@ -16,13 +16,11 @@ incluirTemplate('header');
       <div class="contenido-nosotros">
          <div class="imagen">
             <picture>
-               <img
-                  loading="lazy"
-                  src="build/img/nosotros.avif"
-                  alt="Sobre nosotros" />
-               <source srcset="build/img/nosotros.webp" type="img/webp" />
-               <source srcset="build/img/nosotros.jpg" type="img/jpeg" />
+               <source srcset="build/img/nosotros.webp" type="image/webp" />
+               <source srcset="build/img/nosotros.jpg" type="image/jpeg" />
+               <img loading="lazy" src="build/img/nosotros.jpg" alt="Sobre nosotros" />
             </picture>
+
          </div>
 
          <div class="texto-nosotros">

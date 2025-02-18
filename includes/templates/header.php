@@ -35,7 +35,8 @@
              <span class="btnDark"> <i class="fa-solid fa-moon"></i> </span>
              <div class="container-fluid">
                 <a class="navbar-brand" href="index.php">
-                   <img src="/src/img/logos/logoWhite.png" alt="Logotipo" />
+                   <source srcset="/src/img/logos/logoWhite.webp" type="image/webp">
+                   <img src="/src/img/logos/logoWhite.png" alt="Logotipo">
                 </a>
                 <button
                    class="navbar-toggler navbar-dark"
@@ -61,7 +62,7 @@
                          <a class="nav-link" href="blog.php">Blog</a>
                       </li>
                       <li class="nav-item">
-                         <a class="nav-link" href="contacto.php">Contácto</a>
+                         <a class="nav-link" href="contacto.php">Contacto</a>
                       </li>
                       <?php if ($auth) : ?>
                          <li class="nav-item">
