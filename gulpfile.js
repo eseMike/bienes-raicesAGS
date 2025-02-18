@@ -79,15 +79,16 @@ function imgWebp() {
 
 function imgAvif() {
    const settings = {quality: 90};
-   return src(path.img)
+   return src("src/img/**/*.{jpg,png}") // Solo procesar JPG y PNG
       .pipe(
-         avif(settings).on("error", (err) => {
+         avif(settings).on("error", function (err) {
             console.error("Error en imgAvif:", err.message);
             this.emit("end");
          })
       )
       .pipe(dest("build/img"));
 }
+
 
 // Función para optimizar SVGs
 function imgSvg() {
