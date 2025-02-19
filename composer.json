@@ -1,0 +1,17 @@
+{
+    "name": "mikealbarran/bienes-raices-ags2025",
+    "description": "Proyecto con POO",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Mike Albarrán"
+        }
+    ],
+    "require": {},
+    "autoload": {
+    "psr-4": {
+      "App\\": "classes/"
+   }
+}
+
+}

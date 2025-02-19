@@ -8,8 +8,8 @@ if (!$id) {
    die('ID no válido');
 }
 
-// Importar la conexión
-require __DIR__ . '/includes/config/database.php';
+require 'includes/app.php';
+
 
 $db = conectadDB();
 
@@ -28,7 +28,7 @@ if (!$propiedad) {
 }
 
 // Importar el header
-require 'includes/funciones.php';
+
 incluirTemplate('header');
 ?>
 

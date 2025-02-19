@@ -1,7 +1,8 @@
 <?php
 
 // Importar la conexión
-require 'includes/config/database.php';
+require 'includes/app.php';
+
 $db = conectadDB(); // Asegúrate de que esta función retorne un objeto PDO válido
 
 // Crear un email y password

@@ -52,7 +52,13 @@
       input:not([type="submit"]),
       select,
       textarea {
-         background-color: rgb(235, 213, 186);
+         background-color: rgb(235, 213, 186)!important;
+         color: #000 !important; // Texto oscuro para contraste
+         border: 1px solid #a07d64; // Un borde más definido
+      }
+      input::placeholder,
+      textarea::placeholder {
+         color: rgba(0, 0, 0, 0.6) !important; // Color más tenue para el placeholder
       }
       p {
          color: var.$gris;

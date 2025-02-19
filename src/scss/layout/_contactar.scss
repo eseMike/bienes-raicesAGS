@@ -1,7 +1,7 @@
 @use "../base/variables" as vars;
 
 .imagen-contacto {
-   background-image: url(../../../build/img/encuentra.webp);
+   background-image: url(../../../build/img/encuentra.jpg);
    max-width: 100%;
    background-position: center center;
    background-size: cover;
@@ -29,6 +29,6 @@
 /* Soporte para AVIF en navegadores compatibles */
 @supports (background-image: url("data:image/avif;base64,UklGR")) {
    .imagen-contacto {
-      background-image: url(../../../build/img/encuentra.avif);
+      background-image: url(../../../build/img/encuentra.webp);
    }
 }
