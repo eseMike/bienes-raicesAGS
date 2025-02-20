@@ -1,36 +1,17 @@
-<script>
-    function actualizarContador() {
-        const textarea = document.getElementById('descripcion');
-        const contadorTexto = document.getElementById('contador-caracteres');
-        const contadorNumero = document.getElementById('restantes');
-        const minCaracteres = 54;
-
-        const caracteresIngresados = textarea.value.length;
-        const caracteresRestantes = minCaracteres - caracteresIngresados;
-
-        if (caracteresRestantes > 0) {
-            contadorTexto.style.display = "block"; // Muestra el contador si faltan caracteres
-            contadorNumero.textContent = caracteresRestantes;
-        } else {
-            contadorTexto.style.display = "none"; // Oculta el mensaje cuando se llega al mínimo
-        }
-    }
-
-    // Ejecutar la función cuando se cargue la página para reflejar el estado inicial
-    document.addEventListener('DOMContentLoaded', actualizarContador);
-</script>
-
-
-
-
 <?php
 require '../../includes/seguridad.php';
 require '../../includes/config/database.php';
 require '../../includes/funciones.php';
 require __DIR__ . '/../../vendor/autoload.php';
 
-
 use App\Propiedad;
+
+session_start(); // Asegurar que la sesión está iniciada
+
+// Generar un token CSRF si no existe
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 
 $db = conectadDB();
 $propiedad = new Propiedad($db);
@@ -43,47 +24,64 @@ $vendedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $errores = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Asignar valores desde el formulario
-    $propiedad->titulo = htmlspecialchars($_POST['titulo'] ?? '');
-    $propiedad->precio = filter_var($_POST['precio'] ?? '', FILTER_VALIDATE_FLOAT);
-    $propiedad->descripcion = htmlspecialchars($_POST['descripcion'] ?? '');
-    $propiedad->habitaciones = filter_var($_POST['habitaciones'] ?? '', FILTER_VALIDATE_INT);
-    $propiedad->wc = filter_var($_POST['wc'] ?? '', FILTER_VALIDATE_INT);
-    $propiedad->estacionamiento = filter_var($_POST['estacionamiento'] ?? '', FILTER_VALIDATE_INT);
-    $propiedad->vendedor_id = filter_var($_POST['vendedor'] ?? '', FILTER_VALIDATE_INT);
-
-    // Validar imagen usando la clase Propiedad
-    $erroresImagen = $propiedad->validarImagen($_FILES['imagen'] ?? null);
-    if (!empty($erroresImagen)) {
-        $errores = array_merge($errores, $erroresImagen);
-    } else {
-        // Guardar la imagen con un nombre único
-        $propiedad->imagen = md5(uniqid(rand(), true)) . ".webp";
-        $rutaDestino = __DIR__ . "/../../build/img/" . $propiedad->imagen;
-
-        // Intentar mover la imagen a la carpeta de destino
-        if (!move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaDestino)) {
-            $errores[] = "Hubo un error al subir la imagen.";
-        }
+    // Validar CSRF
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $errores[] = "Token CSRF no válido.";
     }
 
-    // Validaciones del formulario
-    if (!$propiedad->titulo) $errores[] = "Debes añadir un título";
-    if (!$propiedad->precio || $propiedad->precio <= 0) $errores[] = "El precio debe ser válido y mayor a 0.";
-    if (strlen($propiedad->descripcion) < 50) $errores[] = "La descripción debe contener al menos 50 caracteres.";
+    // Asignar valores desde el formulario y limpiar entradas
+    $propiedad->titulo = trim(htmlspecialchars($_POST['titulo'] ?? '', ENT_QUOTES, 'UTF-8'));
+    $propiedad->precio = filter_var($_POST['precio'] ?? '', FILTER_VALIDATE_FLOAT) ?: 0;
+    $propiedad->descripcion = trim(htmlspecialchars($_POST['descripcion'] ?? '', ENT_QUOTES, 'UTF-8'));
+    $propiedad->habitaciones = filter_var($_POST['habitaciones'] ?? '', FILTER_VALIDATE_INT) ?: 0;
+    $propiedad->wc = filter_var($_POST['wc'] ?? '', FILTER_VALIDATE_INT) ?: 0;
+    $propiedad->estacionamiento = filter_var($_POST['estacionamiento'] ?? '', FILTER_VALIDATE_INT) ?: 0;
+    $propiedad->vendedor_id = filter_var($_POST['vendedor'] ?? '', FILTER_VALIDATE_INT);
+
+    // Validación extra
+    if (!$propiedad->precio || $propiedad->precio <= 0) $errores[] = "El precio debe ser mayor a 0.";
+    if (strlen($propiedad->descripcion) < 50) $errores[] = "La descripción debe tener al menos 50 caracteres.";
     if (!$propiedad->habitaciones || $propiedad->habitaciones <= 0) $errores[] = "Debe especificar un número válido de habitaciones.";
     if (!$propiedad->wc || $propiedad->wc <= 0) $errores[] = "Debe especificar un número válido de baños.";
     if (!$propiedad->estacionamiento || $propiedad->estacionamiento <= 0) $errores[] = "Debe especificar un número válido de estacionamientos.";
     if (!$propiedad->vendedor_id) $errores[] = "Debe seleccionar un vendedor.";
 
-    // Si no hay errores, intentar guardar en la base de datos
+    // **VALIDACIÓN DE IMAGEN**
+    if (isset($_FILES['imagen']) && !empty($_FILES['imagen']['name'])) {
+        $imagen = $_FILES['imagen'];
+
+        // Extensiones permitidas
+        $extensionesPermitidas = ['jpg', 'jpeg', 'png', 'webp'];
+        $extension = strtolower(pathinfo($imagen['name'], PATHINFO_EXTENSION));
+
+        if (!in_array($extension, $extensionesPermitidas)) {
+            $errores[] = "Formato de imagen no permitido (solo jpg, jpeg, png, webp).";
+        }
+
+        // Validar tamaño (máximo 2MB)
+        if ($imagen['size'] > 2 * 1024 * 1024) {
+            $errores[] = "El tamaño de la imagen no debe superar los 2MB.";
+        }
+
+        // Si no hay errores, subir imagen
+        if (empty($errores)) {
+            $propiedad->imagen = md5(uniqid(rand(), true)) . ".webp";
+            $rutaDestino = __DIR__ . "/../../build/img/" . $propiedad->imagen;
+
+            if (!move_uploaded_file($imagen['tmp_name'], $rutaDestino)) {
+                $errores[] = "Hubo un error al subir la imagen.";
+            }
+        }
+    }
+
+    // Si no hay errores, guardar en la base de datos
     if (empty($errores)) {
         $resultado = $propiedad->crear();
         if ($resultado === true) {
             header("Location: /admin/index.php?mensaje=1");
             exit;
         } else {
-            $errores[] = "Error al guardar la propiedad: " . $resultado;
+            $errores[] = "Error al guardar la propiedad.";
         }
     }
 }
@@ -102,6 +100,9 @@ incluirTemplate('header');
     <?php endforeach; ?>
 
     <form class="form" method="POST" action="/admin/propiedades/crear.php" enctype="multipart/form-data">
+        <!-- Token CSRF para seguridad -->
+        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+
         <fieldset>
             <legend>Información General</legend>
             <input type="text" id="titulo" name="titulo" placeholder="Título Propiedad"
@@ -111,15 +112,11 @@ incluirTemplate('header');
                 value="<?php echo htmlspecialchars($propiedad->precio ?? '', ENT_QUOTES, 'UTF-8'); ?>">
 
             <label for="descripcion">Descripción:</label>
-            <textarea id="descripcion" name="descripcion" rows="5" oninput="actualizarContador()">
-    <?php echo htmlspecialchars($propiedad->descripcion ?? '', ENT_QUOTES, 'UTF-8'); ?>
-</textarea>
+            <textarea id="descripcion" name="descripcion" rows="5" oninput="actualizarContador()"><?php echo htmlspecialchars($propiedad->descripcion ?? '', ENT_QUOTES, 'UTF-8'); ?></textarea>
 
             <p id="contador-caracteres" style="color: red; font-size: 1.2rem;">
                 Mínimo <span id="restantes">50</span> caracteres.
             </p>
-
-
 
             <label for="imagen">Imagen:</label>
             <input type="file" id="imagen" name="imagen" accept="image/*">

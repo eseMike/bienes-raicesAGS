@@ -4,6 +4,8 @@ require '../../includes/config/database.php';
 require '../../includes/funciones.php';
 require '../../classes/Propiedad.php';
 
+session_start(); // Asegurar que la sesión está iniciada
+
 use App\Propiedad;
 
 $db = conectadDB();
@@ -45,110 +47,50 @@ $vendedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $errores = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      // Validación CSRF
+      if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+            $errores[] = "Token CSRF no válido.";
+      }
+
       // Asignar los nuevos valores
-      $propiedad->titulo = htmlspecialchars($_POST['titulo'] ?? '');
-      $propiedad->precio = filter_var($_POST['precio'] ?? '', FILTER_VALIDATE_FLOAT);
-      $propiedad->descripcion = htmlspecialchars($_POST['descripcion'] ?? '');
+      $propiedad->titulo = trim(htmlspecialchars($_POST['titulo'] ?? '', ENT_QUOTES, 'UTF-8'));
+      $propiedad->precio = filter_var(trim($_POST['precio'] ?? ''), FILTER_VALIDATE_FLOAT);
+      $propiedad->descripcion = trim(htmlspecialchars($_POST['descripcion'] ?? '', ENT_QUOTES, 'UTF-8'));
       $propiedad->habitaciones = filter_var($_POST['habitaciones'] ?? '', FILTER_VALIDATE_INT);
       $propiedad->wc = filter_var($_POST['wc'] ?? '', FILTER_VALIDATE_INT);
       $propiedad->estacionamiento = filter_var($_POST['estacionamiento'] ?? '', FILTER_VALIDATE_INT);
       $propiedad->vendedor_id = filter_var($_POST['vendedor'] ?? '', FILTER_VALIDATE_INT);
 
-      // Validar la imagen solo si se subió una nueva
+      // Manejo de imagen
       if ($_FILES['imagen']['tmp_name']) {
-            $erroresImagen = $propiedad->validarImagen($_FILES['imagen']);
-            if (empty($erroresImagen)) {
-                  // Eliminar la imagen anterior
-                  if (!empty($propiedad->imagen) && file_exists("../../imagenes/" . $propiedad->imagen)) {
-                        unlink("../../imagenes/" . $propiedad->imagen);
-                  }
+            $imagen = $_FILES['imagen'];
+            $extensionesPermitidas = ['jpg', 'jpeg', 'png', 'webp'];
+            $extension = strtolower(pathinfo($imagen['name'], PATHINFO_EXTENSION));
 
-                  // Guardar nueva imagen
-                  $propiedad->imagen = md5(uniqid(rand(), true)) . ".webp";
-                  move_uploaded_file($_FILES['imagen']['tmp_name'], "../../imagenes/" . $propiedad->imagen);
-            } else {
-                  $errores = array_merge($errores, $erroresImagen);
+            if (!in_array($extension, $extensionesPermitidas)) {
+                  $errores[] = "Formato de imagen no permitido (solo jpg, jpeg, png, webp).";
             }
-      }
 
-      // Validaciones del formulario
-      if (!$propiedad->titulo) $errores[] = "Debes añadir un título";
-      if (!$propiedad->precio || $propiedad->precio <= 0) $errores[] = "El precio debe ser válido y mayor a 0.";
-      if (strlen($propiedad->descripcion) < 50) $errores[] = "La descripción debe contener al menos 50 caracteres.";
-      if (!$propiedad->habitaciones || $propiedad->habitaciones <= 0) $errores[] = "Debe especificar un número válido de habitaciones.";
-      if (!$propiedad->wc || $propiedad->wc <= 0) $errores[] = "Debe especificar un número válido de baños.";
-      if (!$propiedad->estacionamiento || $propiedad->estacionamiento <= 0) $errores[] = "Debe especificar un número válido de estacionamientos.";
-      if (!$propiedad->vendedor_id) $errores[] = "Debe seleccionar un vendedor.";
+            if ($imagen['size'] > 2 * 1024 * 1024) {
+                  $errores[] = "El tamaño de la imagen no debe superar los 2MB.";
+            }
 
-      // Si no hay errores, actualizar en la base de datos
-      if (empty($errores)) {
-            if ($propiedad->actualizar($id)) {
-                  header("Location: /admin/index.php?mensaje=2");
-                  exit;
-            } else {
-                  $errores[] = "Error al actualizar la propiedad.";
+            if (empty($errores)) {
+                  // Generar nuevo nombre de imagen
+                  $nuevaImagen = md5(uniqid(rand(), true)) . ".webp";
+                  $rutaDestino = "../../build/img/" . $nuevaImagen;
+
+                  if (move_uploaded_file($imagen['tmp_name'], $rutaDestino)) {
+                        // Eliminar la imagen anterior solo si la nueva se subió correctamente
+                        if (!empty($propiedad->imagen) && file_exists("../../build/img/" . $propiedad->imagen)) {
+                              unlink("../../build/img/" . $propiedad->imagen);
+                        }
+                        $propiedad->imagen = $nuevaImagen;
+                  } else {
+                        $errores[] = "Error al subir la imagen.";
+                  }
             }
       }
 }
 
 incluirTemplate('header');
-?>
-
-<main class="contenedor seccion">
-      <h1>Actualizar Propiedad</h1>
-      <a href="/admin" class="boton boton-verde btn-admin">Volver</a>
-
-      <?php foreach ($errores as $error): ?>
-            <div class="alerta error">
-                  <?php echo htmlspecialchars($error); ?>
-            </div>
-      <?php endforeach; ?>
-
-      <form class="form" method="POST" enctype="multipart/form-data">
-            <fieldset>
-                  <legend>Información General</legend>
-                  <label for="titulo">Título:</label>
-                  <input type="text" id="titulo" name="titulo" value="<?php echo htmlspecialchars($propiedad->titulo); ?>">
-
-                  <label for="precio">Precio:</label>
-                  <input type="text" id="precio" name="precio" value="<?php echo htmlspecialchars($propiedad->precio); ?>">
-
-                  <label for="descripcion">Descripción:</label>
-                  <textarea id="descripcion" name="descripcion" rows="5"><?php echo htmlspecialchars($propiedad->descripcion); ?></textarea>
-
-                  <label for="imagen">Imagen:</label>
-                  <input type="file" id="imagen" name="imagen" accept="image/*">
-                  <?php if ($propiedad->imagen): ?>
-                        <img src="/imagenes/<?php echo htmlspecialchars($propiedad->imagen); ?>" alt="Imagen" style="width:200px;">
-                  <?php endif; ?>
-            </fieldset>
-
-            <fieldset>
-                  <legend>Información Propiedad</legend>
-                  <label for="habitaciones">Habitaciones:</label>
-                  <input type="number" id="habitaciones" name="habitaciones" value="<?php echo htmlspecialchars($propiedad->habitaciones); ?>">
-
-                  <label for="wc">Baños:</label>
-                  <input type="number" id="wc" name="wc" value="<?php echo htmlspecialchars($propiedad->wc); ?>">
-
-                  <label for="estacionamiento">Estacionamiento:</label>
-                  <input type="number" id="estacionamiento" name="estacionamiento" value="<?php echo htmlspecialchars($propiedad->estacionamiento); ?>">
-            </fieldset>
-
-            <fieldset>
-                  <legend>Vendedor</legend>
-                  <select name="vendedor">
-                        <option value="" disabled>--Seleccione--</option>
-                        <?php foreach ($vendedores as $vendedor): ?>
-                              <option value="<?php echo $vendedor['id']; ?>" <?php echo ($propiedad->vendedor_id == $vendedor['id']) ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars($vendedor['nombre'] . ' ' . $vendedor['apellido']); ?>
-                              </option>
-                        <?php endforeach; ?>
-                  </select>
-            </fieldset>
-
-            <input type="submit" value="Actualizar Propiedad" class="boton boton-verde">
-      </form>
-</main>
-
-<?php incluirTemplate('footer'); ?>

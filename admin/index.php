@@ -3,26 +3,33 @@
 // Importar la conexión y validar sesión
 require '../includes/seguridad.php';
 require '../includes/config/database.php';
+require '../includes/funciones.php';
+
+session_start(); // Asegurar que la sesión está iniciada
+
+// Generar un token CSRF si no existe
+if (empty($_SESSION['csrf_token'])) {
+      $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $db = conectadDB();
 
-// Escribir la consulta
-$query = "SELECT * FROM propiedades";
+// Escribir la consulta optimizada
+$query = "SELECT id, titulo, imagen, precio FROM propiedades";
 
-// Ejecutar la consulta con manejo de errores
 try {
       $stmt = $db->prepare($query);
       $stmt->execute();
       $resultadoConsulta = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
       error_log("Error al consultar la base de datos: " . $e->getMessage());
-      die("Error al obtener los datos. Intenta más tarde.");
+      $resultadoConsulta = [];
 }
 
 // Mensaje condicional validado
 $resultado = filter_input(INPUT_GET, 'mensaje', FILTER_VALIDATE_INT) ?? null;
 
 // Incluir template
-require '../includes/funciones.php';
 incluirTemplate('header');
 ?>
 
@@ -42,8 +49,17 @@ incluirTemplate('header');
                         case 3:
                               echo "Anuncio Eliminado Correctamente";
                               break;
+                        case 4:
+                              echo "Error: Token CSRF inválido.";
+                              break;
+                        case 5:
+                              echo "Error: Propiedad no encontrada.";
+                              break;
+                        case 6:
+                              echo "Error al eliminar la propiedad.";
+                              break;
                         default:
-                              echo "Operación realizada correctamente";
+                              echo "Operación realizada correctamente.";
                               break;
                   }
                   ?>
@@ -70,15 +86,21 @@ incluirTemplate('header');
                               <td><?php echo htmlspecialchars($propiedad['titulo']); ?></td>
                               <td>
                                     <?php if (!empty($propiedad['imagen'])): ?>
-                                          <img src="/imagenes/<?php echo htmlspecialchars($propiedad['imagen']); ?>" class="imagen-tabla" alt="Imagen Propiedad">
+                                          <img src="/build/img/<?php echo htmlspecialchars($propiedad['imagen']); ?>" class="imagen-tabla" alt="Imagen Propiedad">
                                     <?php else: ?>
                                           <p>Sin imagen</p>
                                     <?php endif; ?>
                               </td>
                               <td><?php echo '$ ' . number_format($propiedad['precio'], 2, '.', ','); ?></td>
                               <td>
-                                    <a class="boton-verde-block" href="<?php echo RUTA_URL; ?>admin/propiedades/actualizar.php?id=<?php echo htmlspecialchars($propiedad['id']); ?>">Actualizar</a>
-                                    <a class="boton-rojo-block" href="/admin/propiedades/eliminar.php?id=<?php echo htmlspecialchars($propiedad['id']); ?>" onclick="return confirm('¿Estás seguro de eliminar esta propiedad?');">Eliminar</a>
+                                    <a class="boton-verde-block" href="/admin/propiedades/actualizar.php?id=<?php echo htmlspecialchars($propiedad['id']); ?>">Actualizar</a>
+
+                                    <!-- Formulario para eliminar con CSRF -->
+                                    <form method="POST" action="/admin/propiedades/eliminar.php" style="display:inline;">
+                                          <input type="hidden" name="id" value="<?php echo htmlspecialchars($propiedad['id']); ?>">
+                                          <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                                          <button type="submit" class="boton-rojo-block" onclick="return confirm('¿Estás seguro de eliminar esta propiedad?');">Eliminar</button>
+                                    </form>
                               </td>
                         </tr>
                   <?php endforeach; ?>
