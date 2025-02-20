@@ -27,7 +27,8 @@
 require '../../includes/seguridad.php';
 require '../../includes/config/database.php';
 require '../../includes/funciones.php';
-require '../../classes/Propiedad.php';
+require __DIR__ . '/../../vendor/autoload.php';
+
 
 use App\Propiedad;
 
@@ -58,7 +59,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         // Guardar la imagen con un nombre único
         $propiedad->imagen = md5(uniqid(rand(), true)) . ".webp";
-        move_uploaded_file($_FILES['imagen']['tmp_name'], "../../imagenes/" . $propiedad->imagen);
+        $rutaDestino = __DIR__ . "/../../build/img/" . $propiedad->imagen;
+
+        // Intentar mover la imagen a la carpeta de destino
+        if (!move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaDestino)) {
+            $errores[] = "Hubo un error al subir la imagen.";
+        }
     }
 
     // Validaciones del formulario
