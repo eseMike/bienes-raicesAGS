@@ -25,9 +25,11 @@ try {
     // Preparar la consulta
     $stmt = $db->prepare($query);
 
+
     // Ejecutar con parámetros seguros
     $stmt->execute([
         ':email' => $email,
+
         ':password' => $passwordHash, // Aquí usas el password hasheado
     ]);
 

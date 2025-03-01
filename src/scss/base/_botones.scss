@@ -15,9 +15,13 @@
 .boton-rojo-block {
    @include mix.boton(var.$rojo, block);
    display: grid;
+   width: 100%; // Hace que ocupe el mismo espacio que "Actualizar"
+   min-width: 230px;
 }
 
 .boton-verde-block {
    @include mix.boton(var.$softGold, block);
    display: grid;
+   width: 100%; // Hace que ocupe el mismo espacio que "Actualizar"
+   min-width: 230px;
 }

@@ -1,5 +1,8 @@
 <?php
-session_start(); // Inicia la sesión
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 
 // Configuración segura de la sesión
 if (session_status() === PHP_SESSION_NONE) {

@@ -5,8 +5,6 @@ require '../includes/seguridad.php';
 require '../includes/config/database.php';
 require '../includes/funciones.php';
 
-session_start(); // Asegurar que la sesión está iniciada
-
 // Generar un token CSRF si no existe
 if (empty($_SESSION['csrf_token'])) {
       $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
@@ -14,9 +12,8 @@ if (empty($_SESSION['csrf_token'])) {
 
 $db = conectadDB();
 
-// Escribir la consulta optimizada
+// Consultar las propiedades
 $query = "SELECT id, titulo, imagen, precio FROM propiedades";
-
 try {
       $stmt = $db->prepare($query);
       $stmt->execute();
@@ -26,7 +23,7 @@ try {
       $resultadoConsulta = [];
 }
 
-// Mensaje condicional validado
+// Obtener mensaje de operación (si existe)
 $resultado = filter_input(INPUT_GET, 'mensaje', FILTER_VALIDATE_INT) ?? null;
 
 // Incluir template
@@ -41,25 +38,25 @@ incluirTemplate('header');
                   <?php
                   switch ($resultado) {
                         case 1:
-                              echo "Anuncio Creado Correctamente";
+                              echo "✅ Anuncio Creado Correctamente";
                               break;
                         case 2:
-                              echo "Anuncio Actualizado Correctamente";
+                              echo "✅ Anuncio Actualizado Correctamente";
                               break;
                         case 3:
-                              echo "Anuncio Eliminado Correctamente";
+                              echo "✅ Anuncio Eliminado Correctamente";
                               break;
                         case 4:
-                              echo "Error: Token CSRF inválido.";
+                              echo "❌ Error: Token CSRF inválido.";
                               break;
                         case 5:
-                              echo "Error: Propiedad no encontrada.";
+                              echo "❌ Error: Propiedad no encontrada.";
                               break;
                         case 6:
-                              echo "Error al eliminar la propiedad.";
+                              echo "❌ Error al eliminar la propiedad.";
                               break;
                         default:
-                              echo "Operación realizada correctamente.";
+                              echo "✅ Operación realizada correctamente.";
                               break;
                   }
                   ?>
@@ -85,8 +82,18 @@ incluirTemplate('header');
                               <td><?php echo htmlspecialchars($propiedad['id']); ?></td>
                               <td><?php echo htmlspecialchars($propiedad['titulo']); ?></td>
                               <td>
-                                    <?php if (!empty($propiedad['imagen'])): ?>
-                                          <img src="/build/img/<?php echo htmlspecialchars($propiedad['imagen']); ?>" class="imagen-tabla" alt="Imagen Propiedad">
+                                    <?php
+                                    $imagen = htmlspecialchars($propiedad['imagen']);
+                                    $rutaImagen = "/" . $imagen; // No agregamos "build/img/" porque ya está en la BD
+                                    $rutaFisicaImagen = $_SERVER['DOCUMENT_ROOT'] . "/" . $imagen; // Obtiene la ruta real del servidor
+
+                                    // Depuración: Verifica si la ruta física y el archivo existen
+                                    // var_dump($rutaFisicaImagen);
+                                    // var_dump(file_exists($rutaFisicaImagen));
+
+                                    if (!empty($imagen) && file_exists($rutaFisicaImagen) && is_file($rutaFisicaImagen)) :
+                                    ?>
+                                          <img src="<?php echo $rutaImagen; ?>" class="imagen-tabla" alt="Imagen Propiedad">
                                     <?php else: ?>
                                           <p>Sin imagen</p>
                                     <?php endif; ?>
@@ -109,8 +116,5 @@ incluirTemplate('header');
 </main>
 
 <?php
-// Cerrar conexión
-$db = null;
-
 include '../includes/templates/footer.php';
 ?>
