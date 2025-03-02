@@ -10,7 +10,6 @@ if (!$id) {
 
 require 'includes/app.php';
 
-
 $db = conectadDB();
 
 // Consultar de manera segura con `prepare()`
@@ -27,8 +26,9 @@ if (!$propiedad) {
    die('No se encontró la propiedad.');
 }
 
-// Importar el header
 
+
+// Importar el header
 incluirTemplate('header');
 ?>
 
@@ -39,39 +39,40 @@ incluirTemplate('header');
       href="https://api.whatsapp.com/send?phone=525578139893&text=Hola, me interesan sus servicios!">
       <i class="fa-brands fa-square-whatsapp whats-icon"></i>
    </a>
-
-   <main class="contenedor seccion">
-      <h1><?php echo htmlspecialchars($propiedad['titulo']); ?></h1>
-      <picture>
-         <source srcset="/imagenes/<?php echo basename(htmlspecialchars($propiedad['imagen'])); ?>" type="image/webp">
-         <source srcset="/imagenes/<?php echo basename(htmlspecialchars($propiedad['imagen'])); ?>" type="image/jpeg">
-         <img src="/imagenes/<?php echo basename(htmlspecialchars($propiedad['imagen'])); ?>" alt="anuncio">
-      </picture>
-
-      <div class="resumen-propiedad">
-         <p class="precio">$<?php echo number_format($propiedad['precio'], 2); ?></p>
-         <ul class="iconos-caracteristicas">
-            <li>
-               <i class="fa-solid fa-toilet"></i>
-               <p><?php echo $propiedad['wc']; ?></p>
-            </li>
-            <li>
-               <i class="fa-solid fa-car"></i>
-               <p><?php echo $propiedad['estacionamiento']; ?></p>
-            </li>
-            <li>
-               <i class="fa-solid fa-bed"></i>
-               <p><?php echo $propiedad['habitaciones']; ?></p>
-            </li>
-         </ul>
-
-         <p>
-            <?php echo nl2br(htmlspecialchars($propiedad['descripcion'])); ?>
-         </p>
-      </div>
-   </main>
 </div>
 
+
+
+
+<main class="contenedor seccion">
+   <picture>
+      <source srcset="/<?php echo htmlspecialchars($propiedad['imagen']); ?>" type="image/webp">
+      <source srcset="/<?php echo htmlspecialchars($propiedad['imagen']); ?>" type="image/jpeg">
+      <img src="/<?php echo htmlspecialchars($propiedad['imagen']); ?>" alt="anuncio">
+   </picture>
+
+   <div class="resumen-propiedad">
+      <p class="precio">$<?php echo number_format($propiedad['precio'], 2); ?></p>
+      <ul class="iconos-caracteristicas">
+         <li>
+            <i class="fa-solid fa-toilet"></i>
+            <p><?php echo $propiedad['wc']; ?></p>
+         </li>
+         <li>
+            <i class="fa-solid fa-car"></i>
+            <p><?php echo $propiedad['estacionamiento']; ?></p>
+         </li>
+         <li>
+            <i class="fa-solid fa-bed"></i>
+            <p><?php echo $propiedad['habitaciones']; ?></p>
+         </li>
+      </ul>
+
+      <p>
+         <?php echo nl2br(htmlspecialchars($propiedad['descripcion'])); ?>
+      </p>
+   </div>
+</main>
 
 <?php
 // Cerrar conexión
