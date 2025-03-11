@@ -139,6 +139,9 @@ incluirTemplate('header',  $inicio = true);
    </div>
 
    <!-- agregando comentario de prueba para VPS  -->
+   <!-- agregando comentario de prueba para VPS  -->
+   <!-- agregando comentario de prueba para VPS  -->
+
 </div>
 
 
