@@ -1,26 +1,28 @@
 // 🟢 Base
-@use "base/normalize";
-@use "base/variables" as *;
-@use "base/mixins" as mix;
-@use "base/globales";
-@use "base/utilidades";
-@use "base/botones";
-@use "base/darkMode";
+@use 'base/normalize';
+@use 'base/variables' as *;
+@use 'base/mixins' as mix;
+@use 'base/globales';
+@use 'base/utilidades';
+@use 'base/botones';
+@use 'base/darkMode';
 
 // 🟢 Componentes UI
-@use "layout/header";
-@use "layout/footer";
-@use "layout/navegacion";
-@use "layout/iconos";
-@use "layout/anuncios";
-@use "layout/contactar";
-@use "layout/inferior";
-@use "layout/testimoniales";
-@use "layout/formulario";
+@use 'layout/header';
+@use 'layout/footer';
+@use 'layout/navegacion';
+@use 'layout/iconos';
+@use 'layout/anuncios';
+@use 'layout/contactar';
+@use 'layout/inferior';
+@use 'layout/testimoniales';
+@use 'layout/formulario';
 
 // 🟢 Páginas internas
-@use "internas/nosotros";
-@use "internas/admin";
+@use 'internas/nosotros';
+@use 'internas/admin';
+
+//comentario prueba
 
 // 🟢 Estilos específicos
 .header {
@@ -28,14 +30,13 @@
 }
 
 .bg-light {
-   background-color: transparent!important;
+   background-color: transparent !important;
 }
 
 .bg-light {
-    background-color: transparent !important;
-    --bs-bg-opacity: 0 !important;
+   background-color: transparent !important;
+   --bs-bg-opacity: 0 !important;
 }
-
 
 .txt-header {
    color: $softGold !important;
