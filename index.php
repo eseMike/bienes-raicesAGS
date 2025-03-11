@@ -137,7 +137,8 @@ incluirTemplate('header',  $inicio = true);
       </section>
       <!-- End of testimonials  -->
    </div>
-   <!-- end of testimonials  -->
+
+   <!-- agregando comentario de prueba para VPS  -->
 </div>
 
 
