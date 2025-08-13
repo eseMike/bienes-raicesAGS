@@ -1,11 +1,6 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
-
-// Configuración segura de la sesión
 if (session_status() === PHP_SESSION_NONE) {
+    // Configuración segura de la sesión (debe ir antes del session_start)
     session_set_cookie_params([
         'lifetime' => 0, // La sesión se cierra al cerrar el navegador
         'path' => '/',
@@ -14,6 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
         'httponly' => true, // Evita acceso desde JavaScript
         'samesite' => 'Strict' // Protege contra CSRF
     ]);
+
     session_start();
 }
 
@@ -38,4 +34,5 @@ if (isset($_SESSION['ultimo_acceso']) && (time() - $_SESSION['ultimo_acceso']) >
     header('Location: /login.php?mensaje=sesion_expirada');
     exit;
 }
+
 $_SESSION['ultimo_acceso'] = time(); // Actualizar tiempo de actividad

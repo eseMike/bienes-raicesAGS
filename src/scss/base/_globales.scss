@@ -1,4 +1,4 @@
-@use "base/variables" as var;
+@use 'base/variables' as var;
 
 html {
    font-size: 62.5%;
@@ -79,3 +79,34 @@ h4 {
 .bg-light {
    background-color: #000 !important;
 }
+
+//Video container
+.video-container {
+   width: 100%;
+   max-width: 1200px; /* ancho máximo del contenedor */
+   margin: 0 auto; /* centra el contenedor */
+   padding: 2rem 0; /* espacio arriba y abajo */
+   display: flex;
+   justify-content: center;
+   align-items: center;
+
+   video {
+      width: 100%;
+      height: auto;
+      border-radius: 8px; /* esquinas redondeadas opcionales */
+      display: block;
+   }
+}
+
+// SCSS para el login page wrapper
+.login-page-wrapper {
+   min-height: 100vh;
+   display: flex;
+   flex-direction: column;
+}
+
+.login-page-wrapper main {
+   flex: 1 0 auto;
+}
+
+// El footer debe estar fuera del .login-page-wrapper, no le pongas position: fixed ni absolute

@@ -1,16 +1,16 @@
-@use "base/variables" as var;
-@use "base/mixins";
+@use 'base/variables' as var;
+@use 'base/mixins';
 
 // Evita la duplicación de background-image
 .no-webp .inicio,
 .webp .inicio {
-   background-image: url("../../build/img/header.webp");
+   background-image: url('../../build/img/header.webp');
    max-width: 100%;
 }
 
 .webp {
    .header {
-      background-color: var.$marinoDark;
+      background-color: gray;
       .navbar {
          background-color: transparent;
       }
@@ -39,5 +39,79 @@
             text-align: start;
          }
       }
+   }
+}
+
+// Botón modo oscuro (posición superior izquierda)
+.btnDark {
+   position: absolute;
+   top: 2rem;
+   left: 2rem;
+   font-size: 2rem;
+   color: var.$blanco;
+   cursor: pointer;
+   z-index: 999;
+}
+
+// Estilos mejorados para navbar
+.navbar {
+   font-weight: 500;
+
+   .nav-link {
+      color: var.$blanco;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+         color: var.$softGold;
+      }
+   }
+
+   .navbar-toggler {
+      border-color: var.$blanco;
+
+      .navbar-toggler-icon {
+         background-image: none;
+         width: 30px;
+         height: 3px;
+         background-color: var.$blanco;
+      }
+   }
+
+   .navbar-brand img {
+      opacity: 1;
+      filter: none;
+      height: 60px;
+   }
+}
+
+// Responsive tweaks
+
+// 1. Ajuste para mobile
+.webp .header.inicio {
+   width: 100vw;
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-position: center center;
+   @include mixins.telefono {
+      min-height: 40rem;
+   }
+}
+
+// 2. Ajuste logo en mobile
+.navbar-brand img {
+   @include mixins.telefono {
+      height: 50px;
+      margin: 0 auto;
+   }
+}
+
+// 3. Padding del contenido header
+.contenido-header {
+   padding-top: 8rem;
+   padding-bottom: 4rem;
+
+   @include mixins.telefono {
+      padding: 5rem 2rem 2rem 2rem;
+      text-align: center;
    }
 }

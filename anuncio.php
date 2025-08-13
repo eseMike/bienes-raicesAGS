@@ -10,7 +10,7 @@ if (!$id) {
 
 require 'includes/app.php';
 
-$db = conectadDB();
+$db = conectarDB();
 
 // Consultar de manera segura con `prepare()`
 $query = "SELECT * FROM propiedades WHERE id = :id";
@@ -20,6 +20,8 @@ $stmt->execute();
 
 // Obtener resultados
 $propiedad = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$imagenesGaleria = json_decode($propiedad['galeria'] ?? '[]');
 
 // Verificar si la propiedad existe antes de acceder a sus datos
 if (!$propiedad) {
@@ -45,11 +47,27 @@ incluirTemplate('header');
 
 
 <main class="contenedor seccion">
-   <picture>
-      <source srcset="/<?php echo htmlspecialchars($propiedad['imagen']); ?>" type="image/webp">
-      <source srcset="/<?php echo htmlspecialchars($propiedad['imagen']); ?>" type="image/jpeg">
-      <img src="/<?php echo htmlspecialchars($propiedad['imagen']); ?>" alt="anuncio">
-   </picture>
+   <div class="galeria-propiedad">
+      <div class="galeria-principal">
+         <img id="imagen-principal" src="/build/img/<?php echo htmlspecialchars($propiedad['imagen']); ?>" alt="Imagen principal propiedad">
+      </div>
+
+      <?php if (!empty($imagenesGaleria)) : ?>
+         <div class="galeria-miniaturas">
+            <?php foreach ($imagenesGaleria as $img) : ?>
+               <img class="miniatura" src="/build/img/<?php echo htmlspecialchars($img); ?>" alt="Imagen propiedad" onclick="cambiarImagen('<?php echo htmlspecialchars($img); ?>')">
+            <?php endforeach; ?>
+         </div>
+      <?php endif; ?>
+   </div>
+
+   <script>
+      function cambiarImagen(nombreImagen) {
+         const imgPrincipal = document.getElementById('imagen-principal');
+         imgPrincipal.src = '/build/img/' + nombreImagen;
+      }
+   </script>
+
 
    <div class="resumen-propiedad">
       <p class="precio">$<?php echo number_format($propiedad['precio'], 2); ?></p>

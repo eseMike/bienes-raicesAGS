@@ -1,7 +1,9 @@
-@use "../base/variables" as vars;
+@use '../base/variables' as vars;
 
 .imagen-contacto {
-   background-image: url(../../../build/img/encuentra.jpg);
+   background-image: url(./../../../src/imgOrang.jpg);
+   // background-color: #ff6a00; 
+   background-blend-mode: multiply;
    max-width: 100%;
    background-position: center center;
    background-size: cover;
@@ -12,7 +14,6 @@
    height: 35rem;
    justify-content: center;
    background-attachment: fixed;
-
    @media (min-width: 768px) {
       height: 50rem;
    }
@@ -27,8 +28,9 @@
 }
 
 /* Soporte para AVIF en navegadores compatibles */
-@supports (background-image: url("data:image/avif;base64,UklGR")) {
+@supports (background-image: url('data:image/avif;base64,UklGR')) {
    .imagen-contacto {
-      background-image: url(../../../build/img/encuentra.webp);
+      // background-image: url(../../../build/img/encuentra.webp);
+      // background-color: #ff6a00; 
    }
 }

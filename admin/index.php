@@ -10,7 +10,7 @@ if (empty($_SESSION['csrf_token'])) {
       $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
-$db = conectadDB();
+$db = conectarDB();
 
 // Consultar las propiedades
 $query = "SELECT id, titulo, imagen, precio FROM propiedades";
@@ -83,9 +83,9 @@ incluirTemplate('header');
                               <td><?php echo htmlspecialchars($propiedad['titulo']); ?></td>
                               <td>
                                     <?php
-                                    $imagen = htmlspecialchars($propiedad['imagen']);
-                                    $rutaImagen = "/" . $imagen; // No agregamos "build/img/" porque ya está en la BD
-                                    $rutaFisicaImagen = $_SERVER['DOCUMENT_ROOT'] . "/" . $imagen; // Obtiene la ruta real del servidor
+                                    $imagen = basename(htmlspecialchars($propiedad['imagen']));
+                                    $rutaImagen = "/build/img/" . $imagen;
+                                    $rutaFisicaImagen = __DIR__ . "/../build/img/" . $imagen;
 
                                     // Depuración: Verifica si la ruta física y el archivo existen
                                     // var_dump($rutaFisicaImagen);

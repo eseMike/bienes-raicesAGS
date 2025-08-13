@@ -1,4 +1,4 @@
-@use "base/variables" as var;
+@use 'base/variables' as var;
 
 .navbar {
    background-color: var.$marinoDark;
@@ -15,9 +15,8 @@
 
          .nav-link {
             color: var.$softGold;
-            font-size: 2.2rem;
+            font-size: 2rem;
             text-align: center;
-
             @media (min-width: 768px) {
                text-align: start;
                text-decoration: none;
@@ -26,6 +25,7 @@
                background-repeat: no-repeat;
                background-size: 0% 2px;
                transition: background-size 0.3s;
+               font-size: 1.5rem;
 
                &:hover,
                &:focus {
