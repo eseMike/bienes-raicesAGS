@@ -42,13 +42,14 @@ jobs:
       - name: Prepare SSH key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SIA_SSH_KEY }}" > ~/.ssh/gha_sia
+          printf '%s' "${{ secrets.SIA_SSH_KEY }}" | tr -d '\r' > ~/.ssh/gha_sia
           chmod 600 ~/.ssh/gha_sia
+          ssh-keygen -l -f ~/.ssh/gha_sia || true
           ssh-keyscan -p 3500 174.136.26.185 >> ~/.ssh/known_hosts
 
       - name: Test SSH connectivity (verbose)
         run: |
-          ssh -vvv -i ~/.ssh/gha_sia -p 3500 \
+          ssh -vvv -i ~/.ssh/gha_sia -p 3500 -o IdentitiesOnly=yes \
             -o BatchMode=yes -o StrictHostKeyChecking=no \
             calientes@174.136.26.185 'echo ok-ssh'
 
@@ -58,4 +59,4 @@ jobs:
             --exclude .git --exclude .github \
             --exclude node_modules --exclude '*.log'"
           DEST="calientes@174.136.26.185:/home/calientes/domains/serviciosinmobiliariosaguascalientes.com/public_html/"
-          rsync $RSYNC_FLAGS -e "ssh -i ~/.ssh/gha_sia -p 3500" ./ "$DEST"
+          rsync $RSYNC_FLAGS -e "ssh -i ~/.ssh/gha_sia -p 3500 -o IdentitiesOnly=yes" ./ "$DEST"
