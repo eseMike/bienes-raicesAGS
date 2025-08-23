@@ -42,10 +42,23 @@ jobs:
       - name: Prepare SSH key
         run: |
           mkdir -p ~/.ssh
-          printf '%s' "${{ secrets.SIA_SSH_KEY }}" | tr -d '\r' > ~/.ssh/gha_sia
+          if [ -n "${{ secrets.SIA_SSH_KEY_B64 }}" ]; then
+            echo "${{ secrets.SIA_SSH_KEY_B64 }}" | base64 -d > ~/.ssh/gha_sia
+          else
+            printf '%s' "${{ secrets.SIA_SSH_KEY }}" | tr -d '\r' > ~/.ssh/gha_sia
+          fi
           chmod 600 ~/.ssh/gha_sia
-          ssh-keygen -l -f ~/.ssh/gha_sia || true
           ssh-keyscan -p 3500 174.136.26.185 >> ~/.ssh/known_hosts
+
+      - name: Inspect SSH key on runner
+        run: |
+          set -eu
+          echo 'First & last lines of key:'
+          sed -n '1p;$p' ~/.ssh/gha_sia || true
+          echo 'File type:'
+          file ~/.ssh/gha_sia || true
+          echo 'Keygen -y check:'
+          if ssh-keygen -y -f ~/.ssh/gha_sia >/dev/null 2>&1; then echo OK; else echo FAIL; fi
 
       - name: Test SSH connectivity (verbose)
         run: |
