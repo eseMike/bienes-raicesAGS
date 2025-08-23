@@ -70,6 +70,7 @@ jobs:
         run: |
           RSYNC_FLAGS="-az --delete \
             --exclude .git --exclude .github \
-            --exclude node_modules --exclude '*.log'"
+            --exclude node_modules --exclude '*.log' \
+            --exclude 'backup*/' --exclude 'backup_*/'"
           DEST="calientes@174.136.26.185:/home/calientes/domains/serviciosinmobiliariosaguascalientes.com/public_html/"
           rsync $RSYNC_FLAGS -e "ssh -i ~/.ssh/gha_sia -p 3500 -o IdentitiesOnly=yes" ./ "$DEST"
