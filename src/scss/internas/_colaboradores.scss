@@ -1,0 +1,140 @@
+@use '../base/variables' as *;
+
+.colaboradores-seccion {
+   h1 {
+      color: $colorPrimario;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 2rem;
+   }
+
+   .descripcion-colaboradores {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: $grisOscuro;
+      text-align: justify;
+   }
+}
+.colaboradores-top {
+   padding-top: 4rem;
+   .titulo-seccion {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: $colorPrimario;
+   }
+
+   .grid-top {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      align-items: start;
+   }
+
+   .colaborador-top {
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.04);
+      padding: 1rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+
+      &:hover {
+         transform: translateY(-5px);
+      }
+
+      img {
+         width: 100%;
+         height: auto;
+         border-radius: 1rem; // solo esquinas suavemente redondeadas (puedes poner 0 si lo quieres completamente cuadrado)
+         object-fit: contain;
+         margin-bottom: 1rem;
+         //  max-height: 280px;
+      }
+
+      h3 {
+         margin: 0.5rem 0 0;
+         font-size: 1rem;
+         color: $blanco;
+         font-weight: bold;
+      }
+
+      .cargo {
+         font-size: 0.95rem;
+         font-style: italic;
+         color: $colorPrimario;
+         margin-bottom: 0.5rem;
+      }
+
+      .descripcion {
+         font-size: 0.9rem;
+         color: $grisOscuro;
+         text-align: justify;
+      }
+   }
+}
+
+// Asesores
+.asesores-seccion {
+   margin-top: 6rem;
+
+   .titulo-seccion {
+      font-size: 2rem;
+      font-weight: 700;
+      color: $colorPrimario;
+      margin-bottom: 1rem;
+   }
+
+   .descripcion-asesores {
+      color: $grisOscuro;
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+   }
+
+   .asesores-slider {
+      overflow: hidden;
+      position: relative;
+      padding: 1rem 0;
+
+      .slider-track {
+         display: flex;
+         width: max-content;
+         animation: moverInfinito 60s linear infinite;
+
+         &:hover {
+            animation-play-state: paused;
+         }
+
+         .slide {
+            min-width: 180px;
+            margin: 0 1rem;
+            transition: transform 0.3s ease;
+
+            img {
+               width: 100%;
+               height: auto;
+               max-height: 280px;
+               object-fit: contain;
+               border-radius: 1rem;
+            }
+
+            &:hover {
+               transform: scale(1.05);
+            }
+         }
+      }
+   }
+}
+
+@keyframes moverInfinito {
+   0% {
+      transform: translateX(0);
+   }
+   100% {
+      transform: translateX(-50%);
+   }
+}

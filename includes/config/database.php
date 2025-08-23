@@ -1,7 +1,8 @@
 <?php
-function conectadDB() {
+function conectarDB()
+{
     try {
-        $db = new PDO('mysql:host=localhost;dbname=bienesraices_crud', 'root', '');
+        $db = new PDO('mysql:host=127.0.0.1;dbname=bienesraices_crud', 'root', '');
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Manejo de errores
         return $db;
     } catch (PDOException $e) {
@@ -9,4 +10,3 @@ function conectadDB() {
         exit;
     }
 }
-

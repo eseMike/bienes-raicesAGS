@@ -4,20 +4,18 @@ require '../../includes/config/database.php';
 require '../../includes/funciones.php';
 require '../../classes/Propiedad.php';
 
-session_start(); // Asegurar que la sesión está iniciada
-
 use App\Propiedad;
 
-$db = conectadDB();
+$db = conectarDB();
 
-// Validar ID de la propiedad
+// Validar ID
 $id = filter_var($_GET['id'] ?? '', FILTER_VALIDATE_INT);
 if (!$id) {
       header('Location: /admin');
       exit;
 }
 
-// Obtener datos de la propiedad actual
+// Obtener propiedad actual
 $stmt = $db->prepare("SELECT * FROM propiedades WHERE id = :id");
 $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 $stmt->execute();
@@ -28,7 +26,7 @@ if (!$datosPropiedad) {
       exit;
 }
 
-// Crear instancia de Propiedad con los datos actuales
+// Instanciar objeto propiedad con datos actuales
 $propiedad = new Propiedad($db);
 $propiedad->titulo = $datosPropiedad['titulo'];
 $propiedad->precio = $datosPropiedad['precio'];
@@ -37,7 +35,7 @@ $propiedad->habitaciones = $datosPropiedad['habitaciones'];
 $propiedad->wc = $datosPropiedad['wc'];
 $propiedad->estacionamiento = $datosPropiedad['estacionamiento'];
 $propiedad->vendedor_id = $datosPropiedad['vendedores_id'];
-$propiedad->imagen = $datosPropiedad['imagen']; // Imagen actual
+$propiedad->imagen = $datosPropiedad['imagen'];
 
 // Obtener vendedores
 $stmt = $db->prepare("SELECT * FROM vendedores");
@@ -46,13 +44,12 @@ $vendedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $errores = [];
 
+// Procesar formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      // Validación CSRF
       if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-            $errores[] = "Token CSRF no válido.";
+            $errores[] = "❌ Token CSRF inválido.";
       }
 
-      // Asignar los nuevos valores
       $propiedad->titulo = trim(htmlspecialchars($_POST['titulo'] ?? '', ENT_QUOTES, 'UTF-8'));
       $propiedad->precio = filter_var(trim($_POST['precio'] ?? ''), FILTER_VALIDATE_FLOAT);
       $propiedad->descripcion = trim(htmlspecialchars($_POST['descripcion'] ?? '', ENT_QUOTES, 'UTF-8'));
@@ -61,36 +58,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $propiedad->estacionamiento = filter_var($_POST['estacionamiento'] ?? '', FILTER_VALIDATE_INT);
       $propiedad->vendedor_id = filter_var($_POST['vendedor'] ?? '', FILTER_VALIDATE_INT);
 
-      // Manejo de imagen
+      // Imagen nueva
       if ($_FILES['imagen']['tmp_name']) {
             $imagen = $_FILES['imagen'];
             $extensionesPermitidas = ['jpg', 'jpeg', 'png', 'webp'];
             $extension = strtolower(pathinfo($imagen['name'], PATHINFO_EXTENSION));
 
             if (!in_array($extension, $extensionesPermitidas)) {
-                  $errores[] = "Formato de imagen no permitido (solo jpg, jpeg, png, webp).";
+                  $errores[] = "Formato de imagen no permitido.";
             }
 
             if ($imagen['size'] > 2 * 1024 * 1024) {
-                  $errores[] = "El tamaño de la imagen no debe superar los 2MB.";
+                  $errores[] = "La imagen excede los 2MB.";
             }
 
             if (empty($errores)) {
-                  // Generar nuevo nombre de imagen
                   $nuevaImagen = md5(uniqid(rand(), true)) . ".webp";
-                  $rutaDestino = "../../build/img/" . $nuevaImagen;
+                  $rutaDestino = __DIR__ . '/../../build/img/' . $nuevaImagen;
 
                   if (move_uploaded_file($imagen['tmp_name'], $rutaDestino)) {
-                        // Eliminar la imagen anterior solo si la nueva se subió correctamente
-                        if (!empty($propiedad->imagen) && file_exists("../../build/img/" . $propiedad->imagen)) {
-                              unlink("../../build/img/" . $propiedad->imagen);
+                        // Eliminar imagen anterior solo si es distinta y existe
+                        $rutaAnterior = __DIR__ . '/../../build/img/' . $propiedad->imagen;
+                        if (!empty($propiedad->imagen) && file_exists($rutaAnterior)) {
+                              unlink($rutaAnterior);
                         }
                         $propiedad->imagen = $nuevaImagen;
                   } else {
-                        $errores[] = "Error al subir la imagen.";
+                        $errores[] = "Error al subir la nueva imagen.";
                   }
+            }
+      }
+
+      // Actualizar
+      if (empty($errores)) {
+            $resultado = $propiedad->actualizar($id);
+            if ($resultado) {
+                  header("Location: /admin/index.php?mensaje=2");
+                  exit;
+            } else {
+                  $errores[] = "❌ No se pudo actualizar la propiedad.";
             }
       }
 }
 
+// Variables para el formulario reutilizable
+$accion = 'Actualizar';
+$formAction = "/admin/propiedades/actualizar.php?id=$id";
+$mostrarImagen = true;
+
+// Render
 incluirTemplate('header');
+include '../../includes/templates/formulario_propiedad.php';
+incluirTemplate('footer');

@@ -4,6 +4,7 @@
          <a class="link-footer" href="nosotros.php">Nosotros</a>
          <a class="link-footer" href="anuncios.php">Catálogo</a>
          <a class="link-footer" href="blog.php">Blog</a>
+         <a class="link-footer" href="colaboradores.php">Colaboradores</a>
          <a class="link-footer" href="contacto.php">Contácto</a>
       </nav>
 

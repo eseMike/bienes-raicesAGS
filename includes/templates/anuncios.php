@@ -1,7 +1,7 @@
 <?php
 // Importar la conexión
 
-$db = conectadDB();
+$db = conectarDB();
 
 // Consultar
 $query = "SELECT * FROM propiedades LIMIT " . $limite;
@@ -20,11 +20,11 @@ $stmt->execute();
         <div class="anuncio">
 
             <picture>
-                <source srcset="/<?php echo htmlspecialchars($propiedad['imagen']); ?>" type="image/webp">
-                <source srcset="/<?php echo htmlspecialchars($propiedad['imagen']); ?>" type="image/jpeg">
-                <img loading="lazy" src="/<?php echo htmlspecialchars($propiedad['imagen']); ?>" alt="anuncio">
+                <?php $ruta = "/build/img/" . basename($propiedad['imagen']); ?>
+                <source srcset="<?php echo $ruta; ?>" type="image/webp">
+                <source srcset="<?php echo $ruta; ?>" type="image/jpeg">
+                <img loading="lazy" src="<?php echo $ruta; ?>" alt="anuncio">
             </picture>
-
 
 
             <div class="contenido-anuncio">

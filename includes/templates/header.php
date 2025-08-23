@@ -7,6 +7,8 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 $auth = isset($_SESSION['login']) && $_SESSION['login'] === true;
+$esAdmin = str_contains($_SERVER['REQUEST_URI'], '/admin');
+
 
 ?>
 
@@ -47,13 +49,16 @@ $auth = isset($_SESSION['login']) && $_SESSION['login'] === true;
                      <li class="nav-item"><a class="nav-link" href="<?php echo RUTA_URL; ?>nosotros.php">Nosotros</a></li>
                      <li class="nav-item"><a class="nav-link" href="<?php echo RUTA_URL; ?>anuncios.php">Catálogo</a></li>
                      <li class="nav-item"><a class="nav-link" href="<?php echo RUTA_URL; ?>blog.php">Blog</a></li>
+                     <li class="nav-item"><a class="nav-link" href="<?php echo RUTA_URL; ?>colaboradores.php">Colaboradores</a></li> <!-- NUEVO -->
                      <li class="nav-item"><a class="nav-link" href="<?php echo RUTA_URL; ?>contacto.php">Contacto</a></li>
-                     <?php if ($auth) : ?>
+                     <?php if ($auth && $esAdmin) : ?>
                         <li class="nav-item">
                            <a class="nav-link" href="<?php echo RUTA_URL; ?>cerrar-sesion.php">Cerrar Sesión</a>
                         </li>
                      <?php endif; ?>
+
                   </ul>
+
                </div>
             </div>
          </nav>

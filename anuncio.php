@@ -10,7 +10,7 @@ if (!$id) {
 
 require 'includes/app.php';
 
-$db = conectadDB();
+$db = conectarDB();
 
 // Consultar de manera segura con `prepare()`
 $query = "SELECT * FROM propiedades WHERE id = :id";
@@ -46,10 +46,11 @@ incluirTemplate('header');
 
 <main class="contenedor seccion">
    <picture>
-      <source srcset="/<?php echo htmlspecialchars($propiedad['imagen']); ?>" type="image/webp">
-      <source srcset="/<?php echo htmlspecialchars($propiedad['imagen']); ?>" type="image/jpeg">
-      <img src="/<?php echo htmlspecialchars($propiedad['imagen']); ?>" alt="anuncio">
+      <source srcset="/build/img/<?php echo htmlspecialchars($propiedad['imagen']); ?>" type="image/webp">
+      <source srcset="/build/img/<?php echo htmlspecialchars($propiedad['imagen']); ?>" type="image/jpeg">
+      <img loading="lazy" src="/build/img/<?php echo htmlspecialchars($propiedad['imagen']); ?>" alt="anuncio">
    </picture>
+
 
    <div class="resumen-propiedad">
       <p class="precio">$<?php echo number_format($propiedad['precio'], 2); ?></p>
