@@ -38,12 +38,19 @@ jobs:
           if [ -f package-lock.json ]; then npm ci; else npm install; fi
           if npm run | grep -q "build"; then npm run build; fi
 
+
       - name: Prepare SSH key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SIA_SSH_KEY }}" > ~/.ssh/gha_sia
           chmod 600 ~/.ssh/gha_sia
           ssh-keyscan -p 3500 174.136.26.185 >> ~/.ssh/known_hosts
+
+      - name: Test SSH connectivity (verbose)
+        run: |
+          ssh -vvv -i ~/.ssh/gha_sia -p 3500 \
+            -o BatchMode=yes -o StrictHostKeyChecking=no \
+            calientes@174.136.26.185 'echo ok-ssh'
 
       - name: Rsync to server
         run: |
